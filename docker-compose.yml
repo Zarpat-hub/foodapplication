@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: database
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "1433:1433"
+
+  dotnet:
+    build: ./FoodApp-backend
+    container_name: dotnet_c
+    environment:
+      - DB_SERVER=${DB_SERVER}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    ports:
+      - "8080:80"
+
+  react:
+    build: ./FoodApp-frontend
+    container_name: react_c
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+
