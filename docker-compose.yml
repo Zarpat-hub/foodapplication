@@ -10,7 +10,7 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - mssql:/var/opt/mssql \
+      - mssql:/var/opt/mssql/
   
   dotnet:
     build: ./FoodApp-backend

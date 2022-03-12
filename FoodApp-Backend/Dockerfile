@@ -10,6 +10,9 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o /app/build
 
+#Copy database
+COPY database.sql var/opt/mssql/
+
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
