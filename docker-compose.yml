@@ -1,17 +1,5 @@
 version: '3.8'
 services:
-  ms-sql-server:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: database
-    user: root
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql:/var/opt/mssql/
-  
   dotnet:
     build: ./FoodApp-backend
     container_name: dotnet_c
@@ -32,6 +20,4 @@ services:
     stdin_open: true
     tty: true
 
-volumes:
-  mssql:
 
