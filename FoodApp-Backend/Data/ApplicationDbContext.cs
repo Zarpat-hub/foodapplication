@@ -6,6 +6,7 @@ namespace FoodApp_Backend.Data
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Colour> Colors { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
