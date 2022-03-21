@@ -8,10 +8,7 @@ namespace FoodApp_Backend.Service
     {
         void AddRestaurant(RestaurantDTO restaurantDTO);
         IEnumerable<Restaurant> GetRestaurants();
-<<<<<<< HEAD
         Restaurant GetRestaurantById(int id);
-=======
->>>>>>> d4fb72ea353e1c41bb2403e72fd88ec191dfd239
     }
 
     public class RestaurantService : IRestaurantService
@@ -23,7 +20,6 @@ namespace FoodApp_Backend.Service
             _context = context;
         }
 
-<<<<<<< HEAD
         private IEnumerable<Dish> GetDishesForRestaurant(int id)
         {
             var dishes = (from d in _context.Dishes
@@ -34,13 +30,10 @@ namespace FoodApp_Backend.Service
             return dishes;
         }
 
-=======
->>>>>>> d4fb72ea353e1c41bb2403e72fd88ec191dfd239
         public IEnumerable<Restaurant> GetRestaurants()
         {
             var restaurants = _context.Restaurants;
             foreach (var restaurant in restaurants)
-<<<<<<< HEAD
                 restaurant.Menu = GetDishesForRestaurant(restaurant.Id);
 
             return restaurants.ToList();
@@ -52,18 +45,6 @@ namespace FoodApp_Backend.Service
             restaurant.Menu = GetDishesForRestaurant(id);
 
             return restaurant;
-=======
-            {
-                var dishes = (from d in _context.Dishes
-                              join d2r in _context.DishesToRestaurants on d.Id equals d2r.DishId
-                              where d2r.RestaurantId == restaurant.Id
-                              select d).AsEnumerable();
-
-                restaurant.Menu = dishes;
-            }
-
-            return restaurants.ToList();
->>>>>>> d4fb72ea353e1c41bb2403e72fd88ec191dfd239
         }
 
         public void AddRestaurant(RestaurantDTO restaurant)
