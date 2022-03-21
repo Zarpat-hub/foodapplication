@@ -11,19 +11,21 @@ namespace FoodApp_Backend.Controllers
     [ApiController]
     public class RestaurantController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IRestaurantService _restaurantService;
+        private readonly ApplicationDbContext _context;
 
-        public RestaurantController(ApplicationDbContext context, IRestaurantService restaurantService)
+        public RestaurantController(IRestaurantService restaurantService, ApplicationDbContext context)
         {
-            _context = context;
             _restaurantService = restaurantService;
+            _context = context;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Restaurant>> GetRestaurants()
         {
-            return _context.Restaurants;
+            var restaurants = _restaurantService.GetRestaurants();
+
+            return restaurants.ToList();
         }
 
         [HttpPost]

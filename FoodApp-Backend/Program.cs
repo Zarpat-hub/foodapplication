@@ -29,11 +29,6 @@ using (var serviceScope = app.Services.CreateScope())
 
 
 // Configure the HTTP request pipeline.
-
-var dbcontext = new ApplicationDbContext();
-var seeder = new TestSeeder(dbcontext);
-seeder.SeedColors();
-
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 
 app.UseSwagger();
