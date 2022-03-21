@@ -1,12 +1,14 @@
 ﻿using FoodApp_Backend.Models;
+using FoodApp_Backend.Models.RelationEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodApp_Backend.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Colour> Colors { get; set; }
-        public DbSet<Restaurant> Restaurants { get; set;}
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Dish> Dishes { get; set; }
+        public DbSet<DishToRestaurant> DishesToRestaurants { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

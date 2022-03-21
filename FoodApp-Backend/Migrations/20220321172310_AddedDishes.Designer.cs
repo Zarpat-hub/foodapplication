@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodApp_Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220315152755_odkaso")]
-    partial class odkaso
+    [Migration("20220321172310_AddedDishes")]
+    partial class AddedDishes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace FoodApp_Backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("FoodApp_Backend.Models.Colour", b =>
+            modelBuilder.Entity("FoodApp_Backend.Models.Dish", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,17 +32,32 @@ namespace FoodApp_Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Desc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Dishes");
+                });
+
+            modelBuilder.Entity("FoodApp_Backend.Models.RelationEntities.DishToRestaurant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DishId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DishesToRestaurants");
                 });
 
             modelBuilder.Entity("FoodApp_Backend.Models.Restaurant", b =>
