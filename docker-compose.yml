@@ -5,7 +5,6 @@ services:
     container_name: dotnet_c
     environment:
       - DB_SERVER=${DB_SERVER}
-      - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}

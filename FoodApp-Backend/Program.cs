@@ -27,6 +27,9 @@ using (var serviceScope = app.Services.CreateScope())
     serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
 }
 
+var dbcontext = new ApplicationDbContext();
+var seeder = new Seeder(dbcontext);
+seeder.SeedRoles();
 
 // Configure the HTTP request pipeline.
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
