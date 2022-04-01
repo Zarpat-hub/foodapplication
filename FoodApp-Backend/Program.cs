@@ -27,7 +27,10 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors();
+
 builder.Services.AddControllers(options =>
 {
     var jsonInputFormatter = options.InputFormatters
@@ -55,7 +58,7 @@ var seeder = new Seeder(dbcontext);
 seeder.SeedRoles();
 
 // Configure the HTTP request pipeline.
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
+app.UseCors(x => x.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -11,6 +11,7 @@ const Login = () => {
 
     await fetch("http://localhost:8080/Auth/token", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         accept: "*/*",
