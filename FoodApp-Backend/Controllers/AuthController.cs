@@ -27,6 +27,12 @@ namespace FoodApp_Backend.Controllers
         public ActionResult Login([FromBody]LoginDTO loginDTO)
         {
             string token = _accountService.GenerateJWT(loginDTO);
+
+            Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true
+            });
+
             return Ok(new { token });
         }
     }
