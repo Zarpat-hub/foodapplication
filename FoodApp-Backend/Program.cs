@@ -51,6 +51,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterDTO>, RegisterValidator>();
 builder.Services.AddScoped<IValidator<LoginDTO>, LoginValidator>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
