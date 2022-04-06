@@ -25,6 +25,7 @@ const Restaurant = () => {
   }, [name]);
 
   const [cartItems, setCartItems] = useState([]);
+
   const addProduct = (product) => {
     const exist = cartItems.find((x) => x.id === product.id);
     if (exist) {
@@ -37,6 +38,18 @@ const Restaurant = () => {
       setCartItems([...cartItems, { ...product, qty: 1 }]);
     }
   };
+  const removeProduct = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+    if (exist.qty === 1) {
+      setCartItems(cartItems.filter((x) => x.id !== product.id));
+    } else {
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+        )
+      );
+    }
+  };
 
   return (
     <div>
@@ -45,12 +58,13 @@ const Restaurant = () => {
       ) : (
         <section>
           <div className="row">
+            <div>Restauracja {info.name}</div>
             <div className="col-8">
-              <div>Restauracja {info.name}</div>
+              <h3>Menu</h3>
               <Menu products={menu} onAdd={addProduct} />
             </div>
-            <div className="col">
-              <Cart cartItems={cartItems} />
+            <div className="col-sm">
+              <Cart cartItems={cartItems} removeProduct={removeProduct} />
             </div>
           </div>
 

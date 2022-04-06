@@ -1,17 +1,20 @@
 import Dish from "./Dish";
 const Menu = ({ products, onAdd }) => {
-  //console.log(props);
+  const numberOfDishes = products.length;
+
   return (
     <div>
-      {products.map((e) => (
-        <Dish
-          key={e.id}
-          name={e.name}
-          price={e.price}
-          add={onAdd}
-          product={e}
-        />
-      ))}
+      {numberOfDishes > 0
+        ? products.map((e) => (
+            <Dish
+              key={e.id}
+              name={e.name}
+              price={e.price}
+              add={onAdd}
+              product={e}
+            />
+          ))
+        : "Brak oferty"}
     </div>
   );
 };
