@@ -35,5 +35,13 @@ namespace FoodApp_Backend.Controllers
 
             return Ok(new { token });
         }
+
+        [HttpPost("logout")]
+        public ActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+
+            return Ok();
+        }
     }
 }
