@@ -8,7 +8,7 @@ const Navigation = () => {
   let navigate = useNavigate();
 
   const logout = async () => {
-    console.log("test");
+    //console.log("test");
 
     await fetch("http://localhost:8080/Auth/logout", {
       method: "POST",
@@ -34,13 +34,10 @@ const Navigation = () => {
               <Nav.Link>Restauracje</Nav.Link>
             </LinkContainer>
 
-            {loginContext.role === "Owner" ? (
-              <LinkContainer to="/addRestaurant">
-                <Nav.Link>Dodaj restaurację</Nav.Link>
-              </LinkContainer>
-            ) : (
-              " "
-            )}
+            <LinkContainer to="/addRestaurant">
+              <Nav.Link>Dodaj restaurację</Nav.Link>
+            </LinkContainer>
+
             {loginContext.role !== "" ? (
               <LinkContainer to="/profile">
                 <Nav.Link>Profil</Nav.Link>

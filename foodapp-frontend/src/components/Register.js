@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Nav } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [roleID, setRole] = useState(1);
+  const [roleID] = useState(1);
 
   let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-
     await fetch("http://localhost:8080/Auth/user", {
       method: "POST",
       headers: {
@@ -24,66 +24,116 @@ const Register = () => {
         password,
         confirmPassword,
         roleID,
-      }).then((res) => {
-        navigate("/");
       }),
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <section>
-      <h2>Formularz rejestracyjny</h2>
-      <form onSubmit={submit}>
-        <div>
-          <label>
-            e-mail :
-            <input type="text" onChange={(e) => setMail(e.target.value)} />
-          </label>
+      <section className="vh-100">
+        <div className="mask d-flex align-items-center h-100 gradient-custom-3">
+          <div className="container h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-12 col-md-9 col-lg-7 col-xl-6">
+                <div className="card">
+                  <div className="card-body p-5">
+                    <h2 className="text-uppercase text-center mb-5">
+                      Rejestracja
+                    </h2>
+
+                    <form onSubmit={submit}>
+                      <div className="form-outline mb-4">
+                        <input
+                          type="text"
+                          id="form3Example1cg"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setName(e.target.value)}
+                          required
+                        />
+                        <label className="form-label" htmlFor="form3Example1cg">
+                          Twoje imie
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          type="email"
+                          id="form3Example3cg"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setMail(e.target.value)}
+                          required
+                        />
+                        <label className="form-label" htmlFor="form3Example3cg">
+                          Adres e-mail
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          type="password"
+                          id="form3Example4cg"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                        />
+                        <label className="form-label" htmlFor="form3Example4cg">
+                          Hasło
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          type="password"
+                          id="form3Example4cdg"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          required
+                        />
+                        <label
+                          className="form-label"
+                          htmlFor="form3Example4cdg"
+                        >
+                          Powtórz swoje hasło
+                        </label>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <input
+                          type="submit"
+                          className="btn btn-success btn-block btn-lg gradient-custom-4 "
+                          value="Zarejestruj"
+                          required
+                        />
+                      </div>
+
+                      <p className="text-center text-muted mt-5 mb-0">
+                        <LinkContainer to="/login">
+                          <Nav.Link>Masz już konto? Zaloguj się!</Nav.Link>
+                        </LinkContainer>
+                      </p>
+                      <p className="text-center text-muted mt-1 mb-0">
+                        <LinkContainer to="/login">
+                          <Nav.Link>
+                            Jesteś właścicielem resraturacji? Zarejestruj się
+                            tutaj!
+                          </Nav.Link>
+                        </LinkContainer>
+                      </p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <label>
-            Imie :
-            <input type="text" onChange={(e) => setName(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            hasło :
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            hasło2:
-            <input
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          Użytkownik
-          <input
-            type="radio"
-            value="1"
-            name="role"
-            onChange={(e) => setRole(e.target.value)}
-          />
-          Właściciel
-          <input
-            type="radio"
-            value="2"
-            name="role"
-            onChange={(e) => setRole(e.target.value)}
-          />
-        </div>
-        <div>
-          <input type="submit" value="Zarejestruj" />
-        </div>
-      </form>
+      </section>
     </section>
   );
 };

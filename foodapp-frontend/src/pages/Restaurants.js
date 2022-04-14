@@ -8,7 +8,7 @@ const Restaurants = () => {
   const [isLoaded, setLoaded] = useState(false);
   const [city, setCity] = useState("");
 
-  useEffect(() => {
+  const loadData = () => {
     fetch("http://localhost:8080/Restaurant")
       .then((res) => res.json())
       .then((data) => {
@@ -16,17 +16,30 @@ const Restaurants = () => {
         setLoaded(true);
       })
       .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
+
+  const sub = (e) => {
+    e.preventDefault();
+    console.log("x");
+    if (city !== "") {
+      fetch(`http://localhost:8080/Restaurant/byCity/${city}`)
+        .then((res) => res.json())
+        .then((d) => {
+          setData(d);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      loadData();
+    }
+  };
 
   const restaurants = data.map((dat) => (
     <Restaurant key={dat.id} name={dat.name} image={dat.image} id={dat.id} />
   ));
-
-  const search = (e) => {
-    console.log(e.target.value);
-    setCity(e.target.value);
-  };
-
   return (
     <div>
       {!isLoaded ? (
@@ -35,13 +48,14 @@ const Restaurants = () => {
         <section>
           <div className="row p-5 text-center d-flex justify-content-center">
             <h3>Wyszukaj restauracje w swojej miejscowości!</h3>
-
-            <input
-              type="text"
-              onChange={search}
-              value={city}
-              className="form-control-lg m-2 text-center col-sm-8 col-lg-4"
-            />
+            <form onSubmit={sub}>
+              <input
+                type="text"
+                onChange={(e) => setCity(e.target.value)}
+                value={city}
+                className="form-control-lg m-2 text-center col-sm-8 col-lg-4"
+              />
+            </form>
           </div>
           <div className="text-center">
             <h4>Lista restauracji</h4>

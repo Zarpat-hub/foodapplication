@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
-import { BiKey } from "react-icons/bi";
+
+import { Nav } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 const Login = () => {
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,58 +39,65 @@ const Login = () => {
   };
 
   return (
-    <section className="col-sm-6">
-      <div className="card d-flex align-items-center">
-        <div className="card-body">
-          <h4 className="card-title text-center mb-4 mt-1">Zaloguj</h4>
-          <hr />
-          <form onSubmit={submit}>
-            <div className="form-group">
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">
-                    <CgProfile size={25} />
-                  </span>
+    <section>
+      <section className="vh-100">
+        <div className="mask d-flex align-items-center h-100 gradient-custom-3">
+          <div className="container h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-12 col-md-9 col-lg-7 col-xl-6">
+                <div className="card">
+                  <div className="card-body p-5">
+                    <h2 className="text-uppercase text-center mb-5">Zaloguj</h2>
+
+                    <form onSubmit={submit}>
+                      <div className="form-outline mb-4">
+                        <input
+                          type="email"
+                          id="email"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setMail(e.target.value)}
+                          required
+                        />
+                        <label className="form-label" htmlFor="email">
+                          Adres e-mail
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          type="password"
+                          id="password"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                        />
+                        <label className="form-label" htmlFor="password">
+                          Hasło
+                        </label>
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <input
+                          type="submit"
+                          className="btn btn-success btn-block btn-lg gradient-custom-4 "
+                          value="Zaloguj"
+                          required
+                        />
+                      </div>
+                      {error ? "Nieprawidlow" : ""}
+                      <p className="text-center text-muted mt-5 mb-0">
+                        <LinkContainer to="/register">
+                          <Nav.Link>Nie masz konta? Zarejestruj się</Nav.Link>
+                        </LinkContainer>
+                      </p>
+                    </form>
+                  </div>
                 </div>
-                <input
-                  name=""
-                  className="form-control"
-                  placeholder="email"
-                  type="email"
-                  value={email}
-                  required
-                  onChange={(e) => setMail(e.target.value)}
-                />
               </div>
             </div>
-            <div className="form-group">
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">
-                    <BiKey size={25} />
-                  </span>
-                </div>
-                <input
-                  className="form-control"
-                  placeholder="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <input
-                type="submit"
-                className="btn btn-primary btn-block"
-                value="Zaloguj"
-              />
-            </div>
-          </form>
-          {error ? "Podano zły email lub hasło" : " "}
+          </div>
         </div>
-      </div>
+      </section>
     </section>
   );
 };
