@@ -28,7 +28,7 @@ namespace FoodApp_Backend.Controllers
             return restaurants.ToList();
         }
 
-        [HttpGet("byCity")]
+        [HttpGet("byCity/{name}")]
         public ActionResult<IEnumerable<Restaurant>> GetRestaurantsByCity(String name)
         {
             var restaurants = _restaurantService.GetRestaurantsByCityName(name);
