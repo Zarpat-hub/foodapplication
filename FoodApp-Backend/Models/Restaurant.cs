@@ -14,5 +14,7 @@ namespace FoodApp_Backend.Models
 
         [NotMapped]
         public IEnumerable<Dish> Menu { get; set; }
+        [NotMapped]
+        public IEnumerable<City> Cities { get; set; }
     }
 }

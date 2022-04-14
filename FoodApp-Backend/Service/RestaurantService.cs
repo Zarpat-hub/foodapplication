@@ -1,6 +1,7 @@
 ﻿using FoodApp_Backend.Data;
 using FoodApp_Backend.Models;
 using FoodApp_Backend.Models.DTOs;
+using FoodApp_Backend.Models.RelationEntities;
 
 namespace FoodApp_Backend.Service
 {
@@ -30,12 +31,24 @@ namespace FoodApp_Backend.Service
             return dishes;
         }
 
+        private IEnumerable<City> GetCitiesForRestaurant(int id)
+        {
+            var cities = (from c in _context.Cities
+                         join c2r in _context.CityToRestaurant on c.Id equals c2r.CityID
+                         where c2r.RestaurantID == id
+                         select c).AsEnumerable();
+
+            return cities;
+        }
+
         public IEnumerable<Restaurant> GetRestaurants()
         {
             var restaurants = _context.Restaurants;
             foreach (var restaurant in restaurants)
+            {
                 restaurant.Menu = GetDishesForRestaurant(restaurant.Id);
-
+                restaurant.Cities = GetCitiesForRestaurant(restaurant.Id);
+            }
             return restaurants.ToList();
         }
 
@@ -43,6 +56,7 @@ namespace FoodApp_Backend.Service
         {
             var restaurant = _context.Restaurants.First(x => x.Id == id);
             restaurant.Menu = GetDishesForRestaurant(id);
+            restaurant.Cities = GetCitiesForRestaurant(id);
 
             return restaurant;
         }
@@ -60,6 +74,15 @@ namespace FoodApp_Backend.Service
 
             _context.Add(restaurantModel);
             _context.SaveChanges();
+
+            foreach (var id in restaurant.CitiesIDs)
+            {
+                var restaurantCity = new CityToRestaurant();
+                restaurantCity.RestaurantID = restaurantModel.Id;
+                restaurantCity.CityID = id;
+                _context.Add(restaurantCity);
+                _context.SaveChanges();
+            }
         }
     }
 }
