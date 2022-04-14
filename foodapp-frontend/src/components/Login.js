@@ -1,8 +1,7 @@
-//import jwtDecode from "jwt-decode";
 import { useState } from "react";
-import { BsFacebook } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-
+import { CgProfile } from "react-icons/cg";
+import { BiKey } from "react-icons/bi";
 const Login = () => {
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +27,6 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         setError(false);
-
         navigate("/");
       })
       .catch((res) => {
@@ -41,7 +39,7 @@ const Login = () => {
 
   return (
     <section className="col-sm-6">
-      <div className="card">
+      <div className="card d-flex align-items-center">
         <div className="card-body">
           <h4 className="card-title text-center mb-4 mt-1">Zaloguj</h4>
           <hr />
@@ -50,15 +48,16 @@ const Login = () => {
               <div className="input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text">
-                    {<BsFacebook size={25} />}
+                    <CgProfile size={25} />
                   </span>
                 </div>
                 <input
                   name=""
                   className="form-control"
-                  placeholder="Email"
+                  placeholder="email"
                   type="email"
                   value={email}
+                  required
                   onChange={(e) => setMail(e.target.value)}
                 />
               </div>
@@ -67,13 +66,14 @@ const Login = () => {
               <div className="input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text">
-                    {<BsFacebook size={25} />}
+                    <BiKey size={25} />
                   </span>
                 </div>
                 <input
                   className="form-control"
-                  placeholder="******"
+                  placeholder="password"
                   type="password"
+                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />

@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [roleID] = useState(1);
+  const [roleID, setRole] = useState(1);
 
+  let navigate = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
 
@@ -22,6 +24,8 @@ const Register = () => {
         password,
         confirmPassword,
         roleID,
+      }).then((res) => {
+        navigate("/");
       }),
     });
   };
@@ -59,6 +63,22 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </label>
+        </div>
+        <div>
+          Użytkownik
+          <input
+            type="radio"
+            value="1"
+            name="role"
+            onChange={(e) => setRole(e.target.value)}
+          />
+          Właściciel
+          <input
+            type="radio"
+            value="2"
+            name="role"
+            onChange={(e) => setRole(e.target.value)}
+          />
         </div>
         <div>
           <input type="submit" value="Zarejestruj" />

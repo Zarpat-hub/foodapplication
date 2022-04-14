@@ -4,10 +4,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Cart from "../components/Cart";
 import Menu from "../components/Menu";
+import { useContext } from "react";
+import { LoginContext } from "../context/LoginContext";
 
 const Restaurant = () => {
   let { name } = useParams();
   let navigate = useNavigate();
+
+  const loginContext = useContext(LoginContext);
 
   const [info, setInfo] = useState([]);
   const [menu, setMenu] = useState([]);
@@ -57,8 +61,10 @@ const Restaurant = () => {
         <Loader />
       ) : (
         <section>
-          <div className="row">
-            <div>Restauracja {info.name}</div>
+          <div className="row pt-2">
+            <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>
+            {loginContext.name}
+            <hr />
             <div className="col-8">
               <h3>Menu</h3>
               <Menu products={menu} onAdd={addProduct} />
@@ -68,7 +74,12 @@ const Restaurant = () => {
             </div>
           </div>
 
-          <button onClick={() => navigate("/restaurants")}>Powrót</button>
+          <button
+            className="btn btn-primary btn-block"
+            onClick={() => navigate("/restaurants")}
+          >
+            Powrót
+          </button>
         </section>
       )}
     </div>

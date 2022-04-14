@@ -1,12 +1,17 @@
 import Login from "../components/Login";
-import { useNavigate } from "react-router-dom";
+import { Nav } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+
 const Loginpage = () => {
-  let navigate = useNavigate();
   return (
-    <section>
+    <section className="min-vh-100 d-flex flex-column justify-content-center align-items-center">
       <Login />
-      Nie masz konta?
-      <button onClick={() => navigate("/register")}>Zarejestruj</button>
+
+      <div className="d-flex flex-column">
+        <LinkContainer to="/register">
+          <Nav.Link>Nie masz konta? Zarejestruj się!</Nav.Link>
+        </LinkContainer>
+      </div>
     </section>
   );
 };

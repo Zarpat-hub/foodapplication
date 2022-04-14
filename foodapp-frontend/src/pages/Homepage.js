@@ -1,27 +1,16 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { LoginContext } from "../context/LoginContext";
+import Refresh from "../context/Refresh";
 
 const Homepage = () => {
-  const [role, setRole] = useState("");
-  const [name, setName] = useState("");
-  useEffect(() => {
-    (async () => {
-      const res = await fetch("http://localhost:8080/User/claims", {
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+  const loginContext = useContext(LoginContext);
 
-      const x = await res.json();
-      setName(x[1].value);
-      setRole(x[3].value);
-    })();
-  });
-
+  Refresh();
   return (
-    <section>
+    <section className="text-center p-2">
       <h2>Homepage</h2>
-      {name !== "" ? <p>Twoje imie to: {name}</p> : ""}
-      {role !== "" ? <p>Rola: {role}</p> : ""}
+      {loginContext.name}
+      {loginContext.role}
     </section>
   );
 };

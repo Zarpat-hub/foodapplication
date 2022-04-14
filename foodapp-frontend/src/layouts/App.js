@@ -11,28 +11,50 @@ import Homepage from "../pages/Homepage";
 import Restaurants from "../pages/Restaurants";
 import RestaurantPage from "../pages/RestaurantPage";
 import Errorpage from "../pages/Errorpage";
-import About from "../pages/About";
 import Loginpage from "../pages/Loginpage";
 import Registerpage from "../pages/Registerpage";
+import { useState } from "react";
+import { LoginContext, User } from "../context/LoginContext";
+import AddRestaurantPage from "../pages/AddRestaurantPage";
+import ProfilePage from "../pages/ProfilePage";
 
 const App = () => {
+  const [name, setName] = useState(User.name);
+  const [role, setRole] = useState(User.role);
+
+  const CheckLogin = async () => {
+    const res = await fetch("http://localhost:8080/User/claims", {
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    const x = await res.json();
+    setName(x[1].value);
+    setRole(x[3].value);
+  };
+
+  CheckLogin();
+
   return (
     <Router>
-      <Nav />
-      <section className="min-vh-100">
-        <Container>
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/restaurants" element={<Restaurants />} />
-            <Route path="/login" element={<Loginpage />} />
-            <Route path="/restaurants/:name" element={<RestaurantPage />} />
-            <Route path="/register" element={<Registerpage />} />
-            <Route path="*" element={<Errorpage />} />
-          </Routes>
-        </Container>
-      </section>
-      <Footer />
+      <LoginContext.Provider value={{ name, role, setName, setRole }}>
+        <Nav />
+        <section className="min-vh-100">
+          <Container>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/restaurants" element={<Restaurants />} />
+              <Route path="/login" element={<Loginpage />} />
+              <Route path="/restaurants/:name" element={<RestaurantPage />} />
+              <Route path="/register" element={<Registerpage />} />
+              <Route path="/addRestaurant" element={<AddRestaurantPage />} />
+              <Route path="*" element={<Errorpage />} />
+            </Routes>
+          </Container>
+        </section>
+        <Footer />
+      </LoginContext.Provider>
     </Router>
   );
 };
