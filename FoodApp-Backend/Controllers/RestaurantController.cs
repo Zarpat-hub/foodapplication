@@ -28,6 +28,14 @@ namespace FoodApp_Backend.Controllers
             return restaurants.ToList();
         }
 
+        [HttpGet("byCity")]
+        public ActionResult<IEnumerable<Restaurant>> GetRestaurantsByCity(String name)
+        {
+            var restaurants = _restaurantService.GetRestaurantsByCityName(name);
+
+            return restaurants.ToList();
+        }
+
         [HttpGet]
         [Route("{id}")]
         public ActionResult<Restaurant> GetRestaurant(int id)

@@ -10,6 +10,7 @@ namespace FoodApp_Backend.Service
         void AddRestaurant(RestaurantDTO restaurantDTO);
         IEnumerable<Restaurant> GetRestaurants();
         Restaurant GetRestaurantById(int id);
+        IEnumerable<Restaurant> GetRestaurantsByCityName(String cityName);
     }
 
     public class RestaurantService : IRestaurantService
@@ -59,6 +60,17 @@ namespace FoodApp_Backend.Service
             restaurant.Cities = GetCitiesForRestaurant(id);
 
             return restaurant;
+        }
+
+        public IEnumerable<Restaurant> GetRestaurantsByCityName(String cityName)
+        {
+            var city = _context.Cities.FirstOrDefault(c => c.Name.ToLower() == cityName.ToLower());
+            var restaurants = (from r in _context.Restaurants
+                              join r2c in _context.CityToRestaurant on r.Id equals r2c.Id
+                              where r2c.CityID == city.Id
+                              select r).AsEnumerable();
+
+            return restaurants;
         }
 
         public void AddRestaurant(RestaurantDTO restaurant)

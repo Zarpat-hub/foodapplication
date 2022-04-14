@@ -22,6 +22,9 @@ namespace FoodApp_Backend.Controllers
         {
             var jwt = Request.Cookies["jwt"];
 
+            if (jwt == null)
+                return BadRequest("No user logged in");
+
             var userClaims = _userService.GetUserClaimsByJWT(jwt);
 
             return userClaims.ToList();
