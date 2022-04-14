@@ -66,8 +66,7 @@ namespace FoodApp_Backend.Service
         {
             var city = _context.Cities.FirstOrDefault(c => c.Name.ToLower() == cityName.ToLower());
             var restaurants = (from r in _context.Restaurants
-                              join r2c in _context.CityToRestaurant on r.Id equals r2c.Id
-                              where r2c.CityID == city.Id
+                              join r2c in _context.CityToRestaurant on city.Id equals r2c.CityID
                               select r).AsEnumerable();
 
             return restaurants;
