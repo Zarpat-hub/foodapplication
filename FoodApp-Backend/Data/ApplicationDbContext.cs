@@ -14,6 +14,8 @@ namespace FoodApp_Backend.Data
         public DbSet<UserToRole> UsersToRoles { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<CityToRestaurant> CityToRestaurant { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<DishToOrder> DishesToOrders { get; set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
