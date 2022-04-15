@@ -20,4 +20,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+	<httpProtocol>
+		<customHeaders>
+			<add name="Access-Control-Allow-Origin" value="http://localhost:3000" />
+		</customHeaders>
+	</httpProtocol>
+	
 </Project>

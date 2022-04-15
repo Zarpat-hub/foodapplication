@@ -67,7 +67,10 @@ var seeder = new Seeder(dbcontext);
 seeder.SeedRoles();
 
 // Configure the HTTP request pipeline.
-app.UseCors(x => x.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+app.UseCors(x => x.SetIsOriginAllowed(origin => true).WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials());
 
 app.UseSwagger();
 app.UseSwaggerUI();
