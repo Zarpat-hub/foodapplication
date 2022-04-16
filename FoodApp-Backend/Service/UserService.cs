@@ -25,7 +25,9 @@ namespace FoodApp_Backend.Service
             var token = handler.ReadJwtToken(jwt);
 
             var claims = token.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier || c.Type == ClaimTypes.Name
-                                            || c.Type == ClaimTypes.Email || c.Type == ClaimTypes.Role);
+                                            || c.Type == ClaimTypes.Email || c.Type == ClaimTypes.Role 
+                                            || c.Type == ClaimTypes.Sid).ToList();
+            claims.Add(new Claim(ClaimTypes.UserData, jwt));
 
             return claims;
         }
