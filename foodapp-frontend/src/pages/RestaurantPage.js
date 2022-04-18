@@ -1,27 +1,34 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Cart from "../components/Cart";
 import Menu from "../components/Menu";
 import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 
+import Order from "../pages/Order";
 const Restaurant = () => {
   let { name } = useParams();
-  let navigate = useNavigate();
 
-  const loginContext = useContext(LoginContext);
+  // const loginContext = useContext(LoginContext);
 
   const [info, setInfo] = useState([]);
   const [menu, setMenu] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
+  const [city, setCities] = useState([]);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     fetch(`http://localhost:8080/Restaurant/${name}`)
       .then((res) => res.json())
       .then((d) => {
         setMenu(d.menu);
+        setCities(d.cities);
         setInfo(d);
         setLoaded(true);
       })
@@ -44,6 +51,7 @@ const Restaurant = () => {
   };
   const removeProduct = (product) => {
     const exist = cartItems.find((x) => x.id === product.id);
+
     if (exist.qty === 1) {
       setCartItems(cartItems.filter((x) => x.id !== product.id));
     } else {
@@ -63,23 +71,29 @@ const Restaurant = () => {
         <section>
           <div className="row pt-2">
             <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>
-            {loginContext.name}
             <hr />
             <div className="col-8">
               <h3>Menu</h3>
               <Menu products={menu} onAdd={addProduct} />
             </div>
             <div className="col-sm">
-              <Cart cartItems={cartItems} removeProduct={removeProduct} />
+              <Cart
+                cartItems={cartItems}
+                removeProduct={removeProduct}
+                openOrder={handleShow}
+              />
             </div>
           </div>
 
-          <button
-            className="btn btn-primary btn-block"
-            onClick={() => navigate("/restaurants")}
-          >
-            Powrót
-          </button>
+          <section>
+            <Order
+              restaurantID={info.id}
+              cart={cartItems}
+              cities={city}
+              handleClose={handleClose}
+              show={show}
+            />
+          </section>
         </section>
       )}
     </div>

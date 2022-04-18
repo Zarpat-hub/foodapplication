@@ -13,8 +13,11 @@ const Refresh = () => {
 
         const x = await res.json();
         console.log(x);
+        loginContext.setID(x[0].value);
         loginContext.setName(x[1].value);
+        loginContext.setEmail(x[2].value);
         loginContext.setRole(x[3].value);
+        loginContext.setToken(x[4].value);
       })();
     } catch (e) {
       console.log(e);

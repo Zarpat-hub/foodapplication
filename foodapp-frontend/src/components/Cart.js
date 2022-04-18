@@ -2,12 +2,24 @@ import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-const Cart = ({ cartItems, removeProduct }) => {
+
+const Cart = ({ cartItems, removeProduct, openOrder }) => {
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
-  const order = () => {
-    console.log(cartItems);
-  };
+
   const loginContext = useContext(LoginContext);
+
+  const Render = () => {
+    if (loginContext.role === "") {
+      return (
+        <LinkContainer to="/login">
+          <Nav.Link>Zaloguj się aby złożyć zamówienie</Nav.Link>
+        </LinkContainer>
+      );
+    } else {
+      return <button onClick={openOrder}>Zamów</button>;
+    }
+  };
+
   return (
     <section className="pl-2">
       <h3>Zamówienie</h3>
@@ -38,15 +50,7 @@ const Cart = ({ cartItems, removeProduct }) => {
 
             <div className="col text-right">{itemsPrice.toFixed(2)}PLN</div>
           </div>
-          <div className="mt-5">
-            {loginContext.role === "" ? (
-              <LinkContainer to="/login">
-                <Nav.Link>Zaloguj się aby złożyć zamówienie</Nav.Link>
-              </LinkContainer>
-            ) : (
-              <button onClick={order}>Zamów</button>
-            )}
-          </div>
+          <div className="mt-5">{Render()}</div>
         </div>
       )}
     </section>

@@ -17,11 +17,14 @@ import { useState } from "react";
 import { LoginContext, User } from "../context/LoginContext";
 import AddRestaurantPage from "../pages/AddRestaurantPage";
 import ProfilePage from "../pages/ProfilePage";
+import Order from "../pages/Order";
 
 const App = () => {
   const [name, setName] = useState(User.name);
   const [role, setRole] = useState(User.role);
-
+  const [email, setEmail] = useState(User.email);
+  const [id, setID] = useState(User.id);
+  const [token, setToken] = useState(User.token);
   const CheckLogin = async () => {
     const res = await fetch("http://localhost:8080/User/claims", {
       headers: { "Content-Type": "application/json" },
@@ -29,15 +32,31 @@ const App = () => {
     });
 
     const x = await res.json();
+    setID(x[0].value);
     setName(x[1].value);
+    setEmail(x[2].value);
     setRole(x[3].value);
+    setToken(x[4].value);
   };
 
   CheckLogin();
 
   return (
     <Router>
-      <LoginContext.Provider value={{ name, role, setName, setRole }}>
+      <LoginContext.Provider
+        value={{
+          name,
+          role,
+          email,
+          id,
+          token,
+          setToken,
+          setID,
+          setEmail,
+          setName,
+          setRole,
+        }}
+      >
         <Nav />
         <section className="min-vh-100">
           <Container>
@@ -49,6 +68,7 @@ const App = () => {
               <Route path="/restaurants/:name" element={<RestaurantPage />} />
               <Route path="/register" element={<Registerpage />} />
               <Route path="/addRestaurant" element={<AddRestaurantPage />} />
+              <Route path="/order" element={<Order />} />
               <Route path="*" element={<Errorpage />} />
             </Routes>
           </Container>
