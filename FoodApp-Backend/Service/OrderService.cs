@@ -10,6 +10,9 @@ namespace FoodApp_Backend.Service
     public interface IOrderService
     {
         void MakeOrder(OrderDTO[] orderDTO,string jwt);
+        IEnumerable<Order> GetAllUserOrders(int userID);
+        IEnumerable<Order> GetActiveUserOrders(int userID);
+        IEnumerable<Order> GetFinishedUserOrders(int userID);
     }
 
     public class OrderService : IOrderService
@@ -49,6 +52,58 @@ namespace FoodApp_Backend.Service
                 dishToOrder.Quantity = dto.Quantity;
                 _context.Add(dishToOrder);
                 _context.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Order> GetAllUserOrders(int userID)
+        {
+            var orders = _context.Orders.Where( o => o.UserID == userID).AsEnumerable();
+            GetDishesForAllOrders(orders.ToArray());
+            GetCityNameForAllOrders(orders.ToArray());
+
+            return orders;
+        }
+
+        public IEnumerable<Order> GetActiveUserOrders(int userID)
+        {
+            var orders = _context.Orders.Where(o => o.UserID == userID && (o.Status == Order.StatusEnum.IN_PROCESS
+                                                                           || o.Status == Order.StatusEnum.SEND));
+            GetDishesForAllOrders(orders.ToArray());
+            GetCityNameForAllOrders(orders.ToArray());
+
+            return orders;
+        }
+
+        public IEnumerable<Order> GetFinishedUserOrders(int userID)
+        {
+            var orders = _context.Orders.Where(o => o.UserID == userID && o.Status == Order.StatusEnum.FINISHED);
+            GetDishesForAllOrders(orders.ToArray());
+            GetCityNameForAllOrders(orders.ToArray());
+
+            return orders;                                                               
+        }
+
+        private void GetDishesForAllOrders(Order[] orders)
+        {
+            foreach (var order in orders)
+            {
+                var dishes = (from d in _context.Dishes
+                              join d2o in _context.DishesToOrders on d.Id equals d2o.DishID
+                              where order.Id == d2o.OrderID
+                              select new Tuple<Dish, int>(d, d2o.Quantity)).AsEnumerable();
+
+
+                order.Dishes = dishes;
+            }
+        }
+
+        private void GetCityNameForAllOrders(Order[] orders)
+        {
+            foreach (var order in orders)
+            {
+                var city = _context.Cities.FirstOrDefault(c => c.Id == order.CityID);
+
+                order.CityName = city.Name;
             }
         }
     }

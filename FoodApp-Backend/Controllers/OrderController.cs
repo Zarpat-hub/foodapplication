@@ -1,4 +1,5 @@
-﻿using FoodApp_Backend.Models.DTOs;
+﻿using FoodApp_Backend.Models;
+using FoodApp_Backend.Models.DTOs;
 using FoodApp_Backend.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,27 @@ namespace FoodApp_Backend.Controllers
             var jwt = Request.Cookies["jwt"];
             _orderService.MakeOrder(orderDTOs, jwt);
             return Ok();
+        }
+
+        [HttpGet("user/all")]
+        public ActionResult<IEnumerable<Order>> GetUserOrders(int userID)
+        {
+            var orders = _orderService.GetAllUserOrders(userID);
+            return Ok(orders);
+        }
+
+        [HttpGet("user/active")]
+        public ActionResult<IEnumerable<Order>> GetActiveUserOrders(int userID)
+        {
+            var orders = _orderService.GetActiveUserOrders(userID);
+            return Ok(orders);
+        }
+        
+        [HttpGet("user/finished")]
+        public ActionResult<IEnumerable<Order>> GetFinishedUserOrders(int userID)
+        {
+            var orders = _orderService.GetFinishedUserOrders(userID);
+            return Ok(orders);
         }
     }
 }

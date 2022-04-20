@@ -26,7 +26,9 @@ namespace FoodApp_Backend.Models
         public DateTime DataAccepted { get; set; }
 
         [NotMapped]
-        public IEnumerable<Dictionary<Dish,int>> Dishes { get; set; }
+        public IEnumerable<Tuple<Dish,int>> Dishes { get; set; }
+        [NotMapped]
+        public string CityName { get; set; }
 
         public enum StatusEnum
         {

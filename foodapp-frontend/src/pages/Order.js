@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
   const [cityID, setCityID] = useState();
   const [street, setStreet] = useState("");

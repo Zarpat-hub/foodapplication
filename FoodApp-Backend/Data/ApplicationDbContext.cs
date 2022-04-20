@@ -25,7 +25,7 @@ namespace FoodApp_Backend.Data
             var name = Environment.GetEnvironmentVariable("DB_NAME");
 
             
-            var connectionString = $"Server={server};Initial Catalog={name};User ID={username};Password={password}";
+            var connectionString = $"Server={server};Initial Catalog={name};User ID={username};Password={password};MultipleActiveResultSets=true";
 
             optionsBuilder.UseSqlServer(connectionString);
 
