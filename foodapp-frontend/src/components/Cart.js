@@ -16,7 +16,11 @@ const Cart = ({ cartItems, removeProduct, openOrder }) => {
         </LinkContainer>
       );
     } else {
-      return <button onClick={openOrder}>Zamów</button>;
+      return (
+        <button className="btn btn-success" onClick={openOrder}>
+          Zamów
+        </button>
+      );
     }
   };
 
@@ -30,8 +34,8 @@ const Cart = ({ cartItems, removeProduct, openOrder }) => {
         <div>
           {cartItems.map((item) => (
             <div key={item.id} className="row">
-              <div className="col">{item.name}</div>
-              <div className="col">
+              <div className="col-sm-8">{item.name}</div>
+              <div className="col-sm-4">
                 <button
                   className="btn btn-danger btn-block"
                   onClick={() => removeProduct(item)}
@@ -39,7 +43,7 @@ const Cart = ({ cartItems, removeProduct, openOrder }) => {
                   -
                 </button>
               </div>
-              <div className="col text-right">
+              <div className="col text-right mb-5">
                 {item.qty} x {item.price.toFixed(2)}PLN
               </div>
             </div>

@@ -59,7 +59,7 @@ const Restaurants = () => {
           </div>
           <div className="text-center">
             <h4>Lista restauracji</h4>
-            <div className="row row-cols-xs-1 row-cols-md-3 row-cols-lg-4 m-1">
+            <div className="row d-flex justify-content-center">
               {restaurants}
             </div>
           </div>

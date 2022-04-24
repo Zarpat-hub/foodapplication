@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
   const [cityID, setCityID] = useState();
   const [street, setStreet] = useState("");
@@ -10,6 +11,8 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
   const loginContext = useContext(LoginContext);
 
   const token = loginContext.token;
+
+  let navigate = useNavigate();
 
   const handleSelect = (e) => {
     setCityID(e.target.value);
@@ -50,6 +53,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
       })
         .then((res) => {
           console.log(res);
+          navigate("/profile");
         })
         .catch((res) => {
           console.log(res);
@@ -69,32 +73,42 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
         <Modal.Header closeButton>
           <Modal.Title>Dokonaj zamówienia</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Wybierz miasto:
-          <select onChange={handleSelect}>
-            <option value="">-----</option>
-            {citySelect}
-          </select>
-          <br />
-          Ulica:
-          <input
-            type="text"
-            value={street}
-            onChange={(e) => setStreet(e.target.value)}
-          />
-          <br />
-          Numer domu:
-          <input
-            type="text"
-            value={houseNumber}
-            onChange={(e) => setHouseNumber(e.target.value)}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <form onClick={submit}>
-            <input type="submit" />
-          </form>
-        </Modal.Footer>
+        <form onSubmit={submit}>
+          <Modal.Body>
+            <div className="row p-2">
+              Wybierz miasto:
+              <select onChange={handleSelect}>
+                <option value="">-----</option>
+                {citySelect}
+              </select>
+            </div>
+            <div className="row p-2">
+              Ulica:
+              <input
+                type="text"
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
+                required
+              />
+            </div>
+            <div className="row p-2">
+              Numer domu:
+              <input
+                type="text"
+                value={houseNumber}
+                onChange={(e) => setHouseNumber(e.target.value)}
+                required
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <input
+              type="submit"
+              className="btn btn-success"
+              value="Potwierdź zamówienie"
+            />
+          </Modal.Footer>
+        </form>
       </Modal>
     </section>
   );

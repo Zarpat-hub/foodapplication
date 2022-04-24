@@ -1,14 +1,47 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { LoginContext } from "../context/LoginContext";
 import { Modal } from "react-bootstrap";
+import { useEffect } from "react";
+import Loader from "../components/Loader";
+import OrderDetails from "../components/OrderDetails";
 
 const ProfilePage = () => {
   const user = useContext(LoginContext);
-
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [activeOrders, setOrders] = useState([]);
+  const [mount, setMonut] = useState(false);
+
+  const orders = useRef();
+  useEffect(() => {
+    if (!mount) {
+      const load = async () => {
+        const res = await fetch(
+          `http://localhost:8080/Order/user/active?userID=${user.id}`
+        );
+        const data = await res.json();
+        setOrders(data);
+      };
+      load();
+      if (activeOrders.length !== 0) {
+        if (activeOrders.status !== 400) {
+          console.log(activeOrders);
+          setMonut(true);
+          orders.current = activeOrders.map((data) => (
+            <OrderDetails
+              key={data.id}
+              city={data.cityName}
+              street={data.street}
+              houseNumber={data.houseNumber}
+              dishes={data.dishes}
+              createdData={data.dataCreated}
+            />
+          ));
+        }
+      }
+    }
+  }, [activeOrders, mount, user.id]);
 
   const deleteAccount = () => {
     console.log("delete");
@@ -20,7 +53,9 @@ const ProfilePage = () => {
       <p>id: {user.id}</p>
       <p>{user.email}</p>
       <p>{user.role}</p>
-      <h4>Twoje zamówienia</h4>
+      <h4>Aktualne Zamówienia</h4>
+      <div className="col-6">{mount ? orders.current : <Loader />}</div>
+      <h4>Historia zamówień</h4>
       <button className="btn btn-danger" onClick={handleShow}>
         Usuń konto
       </button>
