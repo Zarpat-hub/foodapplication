@@ -29,6 +29,8 @@ namespace FoodApp_Backend.Models
         public IEnumerable<Tuple<Dish,int>> Dishes { get; set; }
         [NotMapped]
         public string CityName { get; set; }
+        [NotMapped]
+        public string RestaurantName { get; set; }
 
         public enum StatusEnum
         {

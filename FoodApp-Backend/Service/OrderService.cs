@@ -60,6 +60,7 @@ namespace FoodApp_Backend.Service
             var orders = _context.Orders.Where( o => o.UserID == userID).AsEnumerable();
             GetDishesForAllOrders(orders.ToArray());
             GetCityNameForAllOrders(orders.ToArray());
+            GetRestaurantNameForAllOrders(orders.ToArray());
 
             return orders;
         }
@@ -70,6 +71,7 @@ namespace FoodApp_Backend.Service
                                                                            || o.Status == Order.StatusEnum.SEND));
             GetDishesForAllOrders(orders.ToArray());
             GetCityNameForAllOrders(orders.ToArray());
+            GetRestaurantNameForAllOrders(orders.ToArray());
 
             return orders;
         }
@@ -79,6 +81,7 @@ namespace FoodApp_Backend.Service
             var orders = _context.Orders.Where(o => o.UserID == userID && o.Status == Order.StatusEnum.FINISHED);
             GetDishesForAllOrders(orders.ToArray());
             GetCityNameForAllOrders(orders.ToArray());
+            GetRestaurantNameForAllOrders(orders.ToArray());
 
             return orders;                                                               
         }
@@ -104,6 +107,16 @@ namespace FoodApp_Backend.Service
                 var city = _context.Cities.FirstOrDefault(c => c.Id == order.CityID);
 
                 order.CityName = city.Name;
+            }
+        }
+
+        private void GetRestaurantNameForAllOrders(Order[] orders)
+        {
+            foreach(var order in orders)
+            {
+                var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == order.RestaurantID);
+
+                order.RestaurantName = restaurant.Name;
             }
         }
     }
