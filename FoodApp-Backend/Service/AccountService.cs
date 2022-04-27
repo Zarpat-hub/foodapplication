@@ -12,7 +12,7 @@ namespace FoodApp_Backend.Service
 {
     public interface IAccountService
     {
-        void RegisterUser(RegisterDTO registerDTO);
+        void RegisterUser(RegisterDTO registerDTO,bool owner);
         string GenerateJWT(LoginDTO loginDTO);
     }
 
@@ -27,7 +27,7 @@ namespace FoodApp_Backend.Service
             _passwordHasher = passwordHasher;
         }
 
-        public void RegisterUser(RegisterDTO registerDto)
+        public void RegisterUser(RegisterDTO registerDto, bool ownerRegister)
         {
             var user = new User();
             user.Name = registerDto.Name;
@@ -38,7 +38,7 @@ namespace FoodApp_Backend.Service
             _context.SaveChanges();
 
             var userToRole = new UserToRole();
-            userToRole.RoleID = registerDto.RoleID;
+            userToRole.RoleID = ownerRegister == false ? 1 : 2; //1 - user by default, 2 - owner
             userToRole.UserID = user.Id;
             _context.UsersToRoles.Add(userToRole);
 

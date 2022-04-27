@@ -36,6 +36,7 @@ const ProfilePage = () => {
               houseNumber={data.houseNumber}
               dishes={data.dishes}
               createdData={data.dataCreated}
+              restaurantName={data.restaurantName}
             />
           ));
         }

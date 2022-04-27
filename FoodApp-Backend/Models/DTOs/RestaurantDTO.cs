@@ -5,5 +5,6 @@
         public string Name { get; set; }
         public IFormFile File { get; set; }
         public int[] CitiesIDs { get; set; }
+        public int OwnerID { get; set; }
     }
 }

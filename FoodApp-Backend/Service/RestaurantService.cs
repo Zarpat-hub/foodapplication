@@ -77,7 +77,7 @@ namespace FoodApp_Backend.Service
         {
             var restaurantModel = new Restaurant();
             restaurantModel.Name = restaurant.Name;
-
+            restaurantModel.OwnerId = restaurant.OwnerID;
             using (var dataStream = new MemoryStream())
             {
                 restaurant.File.CopyTo(dataStream);

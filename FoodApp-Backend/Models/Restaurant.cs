@@ -11,6 +11,8 @@ namespace FoodApp_Backend.Models
         public string Name { get; set; }
         [Required]
         public byte[] Image { get; set; }
+ 
+        public int OwnerId { get; set; }
 
         [NotMapped]
         public IEnumerable<Dish> Menu { get; set; }

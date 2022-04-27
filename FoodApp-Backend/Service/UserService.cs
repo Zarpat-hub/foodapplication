@@ -8,6 +8,7 @@ namespace FoodApp_Backend.Service
     public interface IUserService
     {
         IEnumerable<Claim> GetUserClaimsByJWT(string jwt);
+        User GetCurrentUser(string jwt);
     }
 
     public class UserService : IUserService
@@ -30,6 +31,16 @@ namespace FoodApp_Backend.Service
             claims.Add(new Claim(ClaimTypes.UserData, jwt));
 
             return claims;
+        }
+
+        public User GetCurrentUser(string jwt)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwt);
+
+            var user = _context.Users.FirstOrDefault(u => u.Id == Int32.Parse(token.Claims.FirstOrDefault(c => c.Type ==                                                                        ClaimTypes.NameIdentifier).Value));
+
+            return user;
         }
     }
 }
