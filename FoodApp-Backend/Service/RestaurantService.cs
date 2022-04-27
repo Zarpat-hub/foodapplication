@@ -22,7 +22,7 @@ namespace FoodApp_Backend.Service
             _context = context;
         }
 
-        private IEnumerable<Dish> GetDishesForRestaurant(int id)
+        public IEnumerable<Dish> GetDishesForRestaurant(int id)
         {
             var dishes = (from d in _context.Dishes
                           join d2r in _context.DishesToRestaurants on d.Id equals d2r.DishId

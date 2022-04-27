@@ -38,7 +38,11 @@ namespace FoodApp_Backend.Service
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwt);
 
-            var user = _context.Users.FirstOrDefault(u => u.Id == Int32.Parse(token.Claims.FirstOrDefault(c => c.Type ==                                                                        ClaimTypes.NameIdentifier).Value));
+            var userClaims = GetUserClaimsByJWT(jwt);
+
+            var userId = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            var user = _context.Users.FirstOrDefault(u => u.Id == Int32.Parse(userId));
 
             return user;
         }

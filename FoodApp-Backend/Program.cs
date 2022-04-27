@@ -54,6 +54,7 @@ builder.Services.AddScoped<IValidator<LoginDTO>, LoginValidator>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
 
 var app = builder.Build();
 
