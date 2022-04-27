@@ -1,4 +1,6 @@
-﻿namespace FoodApp_Backend.Models.DTOs
+﻿using System.Text.Json.Serialization;
+
+namespace FoodApp_Backend.Models.DTOs
 {
     public class RestaurantDTO
     {

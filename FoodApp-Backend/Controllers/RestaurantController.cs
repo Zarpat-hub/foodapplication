@@ -52,10 +52,8 @@ namespace FoodApp_Backend.Controllers
         public ActionResult AddRestaurant([FromForm]RestaurantDTO restaurant)
         {
             var jwt = Request.Cookies["jwt"];
-            var owner = _userService.GetCurrentUser(jwt);
-            restaurant.OwnerID = owner.Id;
 
-            _restaurantService.AddRestaurant(restaurant);
+            _restaurantService.AddRestaurant(restaurant,jwt);
 
             return Ok();
         }

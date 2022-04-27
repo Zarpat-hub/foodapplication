@@ -7,7 +7,7 @@ namespace FoodApp_Backend.Service
 {
     public interface IRestaurantService
     {
-        void AddRestaurant(RestaurantDTO restaurantDTO);
+        void AddRestaurant(RestaurantDTO restaurantDTO,string jwt);
         IEnumerable<Restaurant> GetRestaurants();
         Restaurant GetRestaurantById(int id);
         IEnumerable<Restaurant> GetRestaurantsByCityName(String cityName);
@@ -16,10 +16,12 @@ namespace FoodApp_Backend.Service
     public class RestaurantService : IRestaurantService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
 
-        public RestaurantService(ApplicationDbContext context)
+        public RestaurantService(ApplicationDbContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public IEnumerable<Dish> GetDishesForRestaurant(int id)
@@ -73,11 +75,11 @@ namespace FoodApp_Backend.Service
             return restaurants;
         }
 
-        public void AddRestaurant(RestaurantDTO restaurant)
+        public void AddRestaurant(RestaurantDTO restaurant, string jwt)
         {
             var restaurantModel = new Restaurant();
             restaurantModel.Name = restaurant.Name;
-            restaurantModel.OwnerId = restaurant.OwnerID;
+            restaurantModel.OwnerId = _userService.GetCurrentUser(jwt).Id;
             using (var dataStream = new MemoryStream())
             {
                 restaurant.File.CopyTo(dataStream);
