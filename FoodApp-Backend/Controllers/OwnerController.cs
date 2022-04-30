@@ -1,4 +1,5 @@
 ﻿using FoodApp_Backend.Models;
+using FoodApp_Backend.Models.DTOs;
 using FoodApp_Backend.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,13 @@ namespace FoodApp_Backend.Controllers
     {
         private readonly IOwnerService _ownerService;
         private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
 
-        public OwnerController(IOwnerService ownerService, IUserService userService)
+        public OwnerController(IOwnerService ownerService, IUserService userService, IAccountService accountService)
         {
             _ownerService = ownerService;
             _userService = userService;
+            _accountService = accountService;
         }
 
         [HttpGet("owned")]
@@ -33,6 +36,13 @@ namespace FoodApp_Backend.Controllers
         public ActionResult AddItemToMenu([FromBody]Dish dish,int restaurantId)
         {
             _ownerService.AddItemToMenu(dish, restaurantId);
+            return Ok();
+        }
+        [HttpPost("{restaurantId}/employee")]
+        [Authorize(Roles ="Owner")]
+        public ActionResult AddEmployeeAccount([FromBody]RegisterDTO registerDTO,int restaurantId)
+        {
+            _accountService.RegisterUser(registerDTO, 3, restaurantId);//3 parameters for adding employee account
             return Ok();
         }
     }

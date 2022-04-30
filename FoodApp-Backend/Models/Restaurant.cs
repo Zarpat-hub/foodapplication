@@ -14,6 +14,10 @@ namespace FoodApp_Backend.Models
  
         public int OwnerId { get; set; }
 
+        public bool hasEmployeeAccount { get; set; } = false;
+
+        public int EmployeeId { get; set; } 
+
         [NotMapped]
         public IEnumerable<Dish> Menu { get; set; }
         [NotMapped]

@@ -19,13 +19,13 @@ namespace FoodApp_Backend.Controllers
         [HttpPost("user")]
         public ActionResult RegisterUser([FromBody]RegisterDTO registerDTO)
         {
-            _accountService.RegisterUser(registerDTO,false);
+            _accountService.RegisterUser(registerDTO,1);
             return Ok();
         }
         [HttpPost("owner")]
         public ActionResult RegisterOwner([FromBody]RegisterDTO registerDTO)
         {
-            _accountService.RegisterUser(registerDTO, true);
+            _accountService.RegisterUser(registerDTO, 2);
             return Ok();
         }
 
