@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodApp_Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220430164103_RestaurantEmployee")]
-    partial class RestaurantEmployee
+    [Migration("20220506135720_RefactorEmployee")]
+    partial class RefactorEmployee
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -163,6 +163,28 @@ namespace FoodApp_Backend.Migrations
                     b.ToTable("DishesToRestaurants");
                 });
 
+            modelBuilder.Entity("FoodApp_Backend.Models.RelationEntities.EmployeeToRestaurant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CityID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RestaurantID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeeToRestaurants");
+                });
+
             modelBuilder.Entity("FoodApp_Backend.Models.RelationEntities.UserToRole", b =>
                 {
                     b.Property<int>("Id")
@@ -190,9 +212,6 @@ namespace FoodApp_Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("Image")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
@@ -203,9 +222,6 @@ namespace FoodApp_Backend.Migrations
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("hasEmployeeAccount")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

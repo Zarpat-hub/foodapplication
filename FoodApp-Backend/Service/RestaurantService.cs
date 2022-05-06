@@ -59,7 +59,18 @@ namespace FoodApp_Backend.Service
         {
             var restaurant = _context.Restaurants.First(x => x.Id == id);
             restaurant.Menu = GetDishesForRestaurant(id);
-            restaurant.Cities = GetCitiesForRestaurant(id);
+            var cities = GetCitiesForRestaurant(id);
+            restaurant.Cities = cities;
+
+            var dictionary = new Dictionary<string, bool>();
+
+            foreach (var city in cities)
+            {
+                var employee = _context.EmployeeToRestaurants.FirstOrDefault(e => e.RestaurantID == id && e.CityID == city.Id);
+                dictionary.Add(city.Name, employee == null ? false : true);
+            }
+
+            restaurant.HasEmployeeAccount = dictionary;
 
             return restaurant;
         }

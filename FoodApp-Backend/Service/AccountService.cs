@@ -13,7 +13,7 @@ namespace FoodApp_Backend.Service
     public interface IAccountService
     {
         void RegisterUser(RegisterDTO registerDTO,int roleID);
-        void RegisterUser(RegisterDTO registerDTO, int roleID, int restaurantId);//For adding employee account
+        void AddEmployee(EmployeeDTO employeeDTO,int restaurantId);
         string GenerateJWT(LoginDTO loginDTO);
     }
 
@@ -45,26 +45,32 @@ namespace FoodApp_Backend.Service
 
             _context.SaveChanges(); 
         }
-        public void RegisterUser(RegisterDTO registerDto, int roleID,int restaurantId)
+        public void AddEmployee(EmployeeDTO employeeDTO,int restaurantId)
         {
+            var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == restaurantId);
+            var city = _context.Cities.FirstOrDefault(c => c.Id == employeeDTO.CityID);
+
             var user = new User();
-            user.Name = registerDto.Name;
-            user.Email = registerDto.Email;
-            user.PasswordHash = _passwordHasher.HashPassword(user, registerDto.Password);
+            user.Name = $"{restaurant.Name} {city.Name}";
+            user.Email = $"{restaurant.Name}{city.Name}@restaurant.com";
+            user.PasswordHash = _passwordHasher.HashPassword(user, employeeDTO.Password);
             _context.Users.Add(user);
 
             _context.SaveChanges();
 
             var userToRole = new UserToRole();
-            userToRole.RoleID = roleID; //1 - user by default, 2 - owner, 3 - employee
+            userToRole.RoleID = 3; // 3 - employee
             userToRole.UserID = user.Id;
             _context.UsersToRoles.Add(userToRole);
 
             _context.SaveChanges();
 
-            var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == restaurantId);
-            restaurant.hasEmployeeAccount = true;
-            restaurant.EmployeeId = user.Id;
+            var employeeToRestaurant = new EmployeeToRestaurant();
+            employeeToRestaurant.RestaurantID = restaurantId;
+            employeeToRestaurant.CityID = employeeDTO.CityID;
+            employeeToRestaurant.EmployeeID = user.Id;
+            _context.EmployeeToRestaurants.Add(employeeToRestaurant);
+
             _context.SaveChanges();
         }
 

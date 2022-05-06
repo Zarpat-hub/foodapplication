@@ -40,9 +40,9 @@ namespace FoodApp_Backend.Controllers
         }
         [HttpPost("{restaurantId}/employee")]
         [Authorize(Roles ="Owner")]
-        public ActionResult AddEmployeeAccount([FromBody]RegisterDTO registerDTO,int restaurantId)
+        public ActionResult AddEmployeeAccount([FromBody]EmployeeDTO employeeDTO,int restaurantId)
         {
-            _accountService.RegisterUser(registerDTO, 3, restaurantId);//3 parameters for adding employee account
+            _accountService.AddEmployee(employeeDTO,restaurantId);
             return Ok();
         }
     }
