@@ -1,6 +1,6 @@
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
-const OrderDetails = ({ city, street, houseNumber, dishes, createdData, restaurantName }) => {
+const OrderDetails = ({ city, street, houseNumber, dishes, createdData }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -13,7 +13,7 @@ const OrderDetails = ({ city, street, houseNumber, dishes, createdData, restaura
       <div className="d-flex flex-column ">
         <div>
           <p>
-            {city} {cData} {cHour} {restaurantName}
+            {city} {cData} {cHour}
           </p>
           <button onClick={handleShow} className="btn-primary align-self-end">
             Szczegóły

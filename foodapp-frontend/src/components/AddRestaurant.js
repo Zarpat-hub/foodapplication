@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import Multiselect from "multiselect-react-dropdown";
+import { useContext } from "react";
+import { LoginContext } from "../context/LoginContext";
 
 const AddRestaurant = () => {
   const [Name, setName] = useState("");
@@ -8,6 +11,10 @@ const AddRestaurant = () => {
   const [CitiesIDs, setCity] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState(false);
+
+  const user = useContext(LoginContext);
+  const token = user.token;
+  const Bearer = `Bearer ${token}`;
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -27,20 +34,6 @@ const AddRestaurant = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const handleCheckBox = (e) => {
-    const tmp = [...CitiesIDs];
-    tmp.push(parseInt(e.target.id));
-    setCity(tmp);
-    console.log(CitiesIDs);
-  };
-
-  const cityCheckbox = cities.map((dat) => (
-    <label className="p-2" key={dat.id}>
-      {dat.name}
-      <input type="checkbox" id={dat.id} onChange={handleCheckBox} />
-    </label>
-  ));
-
   const submit = (e) => {
     e.preventDefault();
     console.log(File);
@@ -53,10 +46,19 @@ const AddRestaurant = () => {
     formData.append("Name", Name);
     formData.append("File", File);
     for (let i = 0; i < CitiesIDs.length; i++) {
-      formData.append("CitiesIDs", CitiesIDs[i]);
+      formData.append("CitiesIDs", CitiesIDs[i].id);
     }
 
-    axios
+    const api = axios.create({
+      withCredentials: true,
+      headers: {
+        Authorization: Bearer,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+    api
       .post(url, formData)
       .then((res) => {
         console.log(res);
@@ -104,7 +106,23 @@ const AddRestaurant = () => {
                         </label>
                       </div>
                       <p>Wybierz miejscowości</p>
-                      {cityCheckbox}
+                      <Multiselect
+                        options={cities}
+                        onSelect={(e) => {
+                          console.log(e);
+                          setCity(e);
+                          console.log(CitiesIDs);
+                        }}
+                        onRemove={(e) => {
+                          console.log(e);
+                          setCity(e);
+                          console.log(CitiesIDs);
+                        }}
+                        selectedValues={(e) => {
+                          console.log(e);
+                        }}
+                        displayValue="name"
+                      />
                       <div className="d-flex justify-content-center">
                         <input
                           type="submit"
@@ -113,6 +131,7 @@ const AddRestaurant = () => {
                           required
                         />
                       </div>
+
                       {error ? "Dodano" : ""}
                     </form>
                   </div>

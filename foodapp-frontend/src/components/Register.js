@@ -7,7 +7,6 @@ const Register = () => {
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [roleID] = useState(1);
 
   let navigate = useNavigate();
   const submit = async (e) => {
@@ -23,7 +22,6 @@ const Register = () => {
         email,
         password,
         confirmPassword,
-        roleID,
       }),
     })
       .then((res) => {
@@ -119,7 +117,7 @@ const Register = () => {
                         </LinkContainer>
                       </p>
                       <p className="text-center text-muted mt-1 mb-0">
-                        <LinkContainer to="/login">
+                        <LinkContainer to="/registerowner">
                           <Nav.Link>
                             Jesteś właścicielem resraturacji? Zarejestruj się
                             tutaj!

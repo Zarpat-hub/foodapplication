@@ -1,40 +1,36 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState("");
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   let navigate = useNavigate();
+
   const submit = async (e) => {
     e.preventDefault();
-    console.log("Loguj");
-
-    await fetch("http://localhost:8080/Auth/token", {
+    await fetch("http://localhost:8080/Auth/owner", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         accept: "*/*",
       },
-      credentials: "include",
       body: JSON.stringify({
+        name,
         email,
         password,
+        confirmPassword,
       }),
     })
       .then((res) => {
         console.log(res);
-        setError(false);
-        navigate("/");
+        navigate("/login");
       })
-      .catch((res) => {
-        setPassword("");
-        setMail("");
-        setError(true);
-        console.log(res);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -47,18 +43,33 @@ const Login = () => {
               <div className="col-12 col-md-9 col-lg-7 col-xl-6">
                 <div className="card">
                   <div className="card-body p-5">
-                    <h2 className="text-uppercase text-center mb-5">Zaloguj</h2>
+                    <h2 className="text-uppercase text-center mb-5">
+                      Rejestracja Właściciela
+                    </h2>
 
                     <form onSubmit={submit}>
                       <div className="form-outline mb-4">
                         <input
+                          type="text"
+                          id="form3Example1cg"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setName(e.target.value)}
+                          required
+                        />
+                        <label className="form-label" htmlFor="form3Example1cg">
+                          Twoje imie
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
                           type="email"
-                          id="email"
+                          id="form3Example3cg"
                           className="form-control form-control-lg"
                           onChange={(e) => setMail(e.target.value)}
                           required
                         />
-                        <label className="form-label" htmlFor="email">
+                        <label className="form-label" htmlFor="form3Example3cg">
                           Adres e-mail
                         </label>
                       </div>
@@ -66,13 +77,29 @@ const Login = () => {
                       <div className="form-outline mb-4">
                         <input
                           type="password"
-                          id="password"
+                          id="form3Example4cg"
                           className="form-control form-control-lg"
                           onChange={(e) => setPassword(e.target.value)}
                           required
                         />
-                        <label className="form-label" htmlFor="password">
+                        <label className="form-label" htmlFor="form3Example4cg">
                           Hasło
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          type="password"
+                          id="form3Example4cdg"
+                          className="form-control form-control-lg"
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          required
+                        />
+                        <label
+                          className="form-label"
+                          htmlFor="form3Example4cdg"
+                        >
+                          Powtórz swoje hasło
                         </label>
                       </div>
 
@@ -80,14 +107,14 @@ const Login = () => {
                         <input
                           type="submit"
                           className="btn btn-success btn-block btn-lg gradient-custom-4 "
-                          value="Zaloguj"
+                          value="Zarejestruj"
                           required
                         />
                       </div>
-                      {error ? "Nieprawidłowy email lub hasło" : ""}
+
                       <p className="text-center text-muted mt-5 mb-0">
-                        <LinkContainer to="/register">
-                          <Nav.Link>Nie masz konta? Zarejestruj się</Nav.Link>
+                        <LinkContainer to="/login">
+                          <Nav.Link>Masz już konto? Zaloguj się!</Nav.Link>
                         </LinkContainer>
                       </p>
                     </form>
@@ -101,4 +128,5 @@ const Login = () => {
     </section>
   );
 };
-export default Login;
+
+export default Register;

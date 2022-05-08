@@ -13,11 +13,14 @@ import RestaurantPage from "../pages/RestaurantPage";
 import Errorpage from "../pages/Errorpage";
 import Loginpage from "../pages/Loginpage";
 import Registerpage from "../pages/Registerpage";
+import RegisterpageOwner from "../pages/RegisterpageOwner";
 import { useState } from "react";
 import { LoginContext, User } from "../context/LoginContext";
 import AddRestaurantPage from "../pages/AddRestaurantPage";
 import ProfilePage from "../pages/ProfilePage";
 import Order from "../pages/Order";
+import MyRestaurants from "../pages/MyRestaurants";
+import ManagmentPage from "../pages/ManagmentPage";
 
 const App = () => {
   const [name, setName] = useState(User.name);
@@ -66,8 +69,11 @@ const App = () => {
               <Route path="/restaurants" element={<Restaurants />} />
               <Route path="/login" element={<Loginpage />} />
               <Route path="/restaurants/:name" element={<RestaurantPage />} />
+              <Route path="/management/:name" element={<ManagmentPage />} />
               <Route path="/register" element={<Registerpage />} />
+              <Route path="/registerowner" element={<RegisterpageOwner />} />
               <Route path="/addRestaurant" element={<AddRestaurantPage />} />
+              <Route path="/myrestaurants" element={<MyRestaurants />} />
               <Route path="/order" element={<Order />} />
               <Route path="*" element={<Errorpage />} />
             </Routes>

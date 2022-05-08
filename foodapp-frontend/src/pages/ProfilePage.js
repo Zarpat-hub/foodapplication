@@ -21,6 +21,11 @@ const ProfilePage = () => {
           `http://localhost:8080/Order/user/active?userID=${user.id}`
         );
         const data = await res.json();
+        //console.log(data.length);
+        if (data.length === 0) {
+          console.log("Brak zamówień");
+          setMonut(true);
+        }
         setOrders(data);
       };
       load();
@@ -36,7 +41,6 @@ const ProfilePage = () => {
               houseNumber={data.houseNumber}
               dishes={data.dishes}
               createdData={data.dataCreated}
-              restaurantName={data.restaurantName}
             />
           ));
         }
