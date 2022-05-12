@@ -5,6 +5,7 @@ using FoodApp_Backend.Data;
 using FoodApp_Backend.Models;
 using FoodApp_Backend.Models.DTOs;
 using FoodApp_Backend.Models.Validators;
+using FoodApp_Backend.Repositories;
 using FoodApp_Backend.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,7 @@ builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IDishRepository, DishRepository>();
 
 var app = builder.Build();
 

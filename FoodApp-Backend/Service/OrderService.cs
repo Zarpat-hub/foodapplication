@@ -2,6 +2,7 @@
 using FoodApp_Backend.Models;
 using FoodApp_Backend.Models.DTOs;
 using FoodApp_Backend.Models.RelationEntities;
+using FoodApp_Backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -19,11 +20,13 @@ namespace FoodApp_Backend.Service
     {
         private readonly ApplicationDbContext _context;
         private readonly IUserService _userService;
+        private readonly IDishRepository _dishRepository;
 
-        public OrderService(ApplicationDbContext context, IUserService userService)
+        public OrderService(ApplicationDbContext context, IUserService userService, IDishRepository dishRepository)
         {
             _context = context;
             _userService = userService;
+            _dishRepository = dishRepository;
         }
 
         public void MakeOrder([FromBody]OrderDTO[] orderDTO,string jwt)
@@ -58,9 +61,9 @@ namespace FoodApp_Backend.Service
         public IEnumerable<Order> GetAllUserOrders(int userID)
         {
             var orders = _context.Orders.Where( o => o.UserID == userID).AsEnumerable();
-            GetDishesForAllOrders(orders.ToArray());
-            GetCityNameForAllOrders(orders.ToArray());
-            GetRestaurantNameForAllOrders(orders.ToArray());
+            _dishRepository.GetDishesForAllOrders(orders.ToArray());
+            _dishRepository.GetCityNameForAllOrders(orders.ToArray());
+            _dishRepository.GetRestaurantNameForAllOrders(orders.ToArray());
 
             return orders;
         }
@@ -69,9 +72,9 @@ namespace FoodApp_Backend.Service
         {
             var orders = _context.Orders.Where(o => o.UserID == userID && (o.Status == Order.StatusEnum.IN_PROCESS
                                                                            || o.Status == Order.StatusEnum.SEND));
-            GetDishesForAllOrders(orders.ToArray());
-            GetCityNameForAllOrders(orders.ToArray());
-            GetRestaurantNameForAllOrders(orders.ToArray());
+            _dishRepository.GetDishesForAllOrders(orders.ToArray());
+            _dishRepository.GetCityNameForAllOrders(orders.ToArray());
+            _dishRepository.GetRestaurantNameForAllOrders(orders.ToArray());
 
             return orders;
         }
@@ -79,45 +82,11 @@ namespace FoodApp_Backend.Service
         public IEnumerable<Order> GetFinishedUserOrders(int userID)
         {
             var orders = _context.Orders.Where(o => o.UserID == userID && o.Status == Order.StatusEnum.FINISHED);
-            GetDishesForAllOrders(orders.ToArray());
-            GetCityNameForAllOrders(orders.ToArray());
-            GetRestaurantNameForAllOrders(orders.ToArray());
+            _dishRepository.GetDishesForAllOrders(orders.ToArray());
+            _dishRepository.GetCityNameForAllOrders(orders.ToArray());
+            _dishRepository.GetRestaurantNameForAllOrders(orders.ToArray());
 
             return orders;                                                               
-        }
-
-        private void GetDishesForAllOrders(Order[] orders)
-        {
-            foreach (var order in orders)
-            {
-                var dishes = (from d in _context.Dishes
-                              join d2o in _context.DishesToOrders on d.Id equals d2o.DishID
-                              where order.Id == d2o.OrderID
-                              select new Tuple<Dish, int>(d, d2o.Quantity)).AsEnumerable();
-
-
-                order.Dishes = dishes;
-            }
-        }
-
-        private void GetCityNameForAllOrders(Order[] orders)
-        {
-            foreach (var order in orders)
-            {
-                var city = _context.Cities.FirstOrDefault(c => c.Id == order.CityID);
-
-                order.CityName = city.Name;
-            }
-        }
-
-        private void GetRestaurantNameForAllOrders(Order[] orders)
-        {
-            foreach(var order in orders)
-            {
-                var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == order.RestaurantID);
-
-                order.RestaurantName = restaurant.Name;
-            }
         }
     }
 }
