@@ -7,11 +7,12 @@ import OrderDetails from "../components/OrderDetails";
 
 const ProfilePage = () => {
   const user = useContext(LoginContext);
+
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [activeOrders, setOrders] = useState([]);
   const [mount, setMonut] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const orders = useRef();
   useEffect(() => {
@@ -21,13 +22,15 @@ const ProfilePage = () => {
           `http://localhost:8080/Order/user/active?userID=${user.id}`
         );
         const data = await res.json();
-        //console.log(data.length);
         if (data.length === 0) {
           console.log("Brak zamówień");
           setMonut(true);
+        } else {
+          console.log(data);
+          setOrders(data);
         }
-        setOrders(data);
       };
+
       load();
       if (activeOrders.length !== 0) {
         if (activeOrders.status !== 400) {
@@ -36,6 +39,7 @@ const ProfilePage = () => {
           orders.current = activeOrders.map((data) => (
             <OrderDetails
               key={data.id}
+              id={data.id}
               city={data.cityName}
               street={data.street}
               houseNumber={data.houseNumber}
@@ -58,9 +62,16 @@ const ProfilePage = () => {
       <p>id: {user.id}</p>
       <p>{user.email}</p>
       <p>{user.role}</p>
-      <h4>Aktualne Zamówienia</h4>
-      <div className="col-6">{mount ? orders.current : <Loader />}</div>
-      <h4>Historia zamówień</h4>
+      {user.role === "User" ? (
+        <>
+          <h4>Aktualne Zamówienia</h4>
+          <div className="col-6">{mount ? orders.current : <Loader />}</div>
+          <h4>Historia zamówień</h4>
+        </>
+      ) : (
+        ""
+      )}
+
       <button className="btn btn-danger" onClick={handleShow}>
         Usuń konto
       </button>

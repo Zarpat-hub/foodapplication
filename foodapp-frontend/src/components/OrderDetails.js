@@ -1,6 +1,14 @@
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
-const OrderDetails = ({ city, street, houseNumber, dishes, createdData }) => {
+const OrderDetails = ({
+  id,
+  update,
+  city,
+  street,
+  houseNumber,
+  dishes,
+  createdData,
+}) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -8,17 +16,32 @@ const OrderDetails = ({ city, street, houseNumber, dishes, createdData }) => {
   const cData = createdData.slice(0, 10);
   const cHour = createdData.slice(11, 16);
 
+  //const received = (id) => {
+  //console.log(id);
+  //console.log(all);
+
+  //let tasks = [...all];
+  // tasks = tasks.filter((t) => t.id !== id);
+  //setOr(tasks);
+  //console.log(tasks);
+  //};
+
   return (
     <section className="row card p-3 mt-2">
       <div className="d-flex flex-column ">
         <div>
           <p>
-            {city} {cData} {cHour}
+            {city} {cData} {cHour + 2}
           </p>
           <button onClick={handleShow} className="btn-primary align-self-end">
             Szczegóły
           </button>
-          <button className="btn-success align-self-end">Dostarczono</button>
+          <button
+            className="btn-success align-self-end"
+            onClick={() => update(id)}
+          >
+            Dostarczono
+          </button>
         </div>
       </div>
       <Modal

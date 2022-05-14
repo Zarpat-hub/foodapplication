@@ -5,6 +5,8 @@ import Loader from "../components/Loader";
 import Cart from "../components/Cart";
 import Menu from "../components/Menu";
 import Order from "../pages/Order";
+import ReactStars from "react-stars";
+
 const Restaurant = () => {
   let { name } = useParams();
 
@@ -58,6 +60,10 @@ const Restaurant = () => {
     }
   };
 
+  const test = (e) => {
+    console.log(e);
+  };
+
   return (
     <div>
       {!isLoaded ? (
@@ -66,6 +72,8 @@ const Restaurant = () => {
         <section>
           <div className="row pt-2">
             <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>
+            <p>Ocena</p>
+            <ReactStars onChange={test} size={24} />
             <hr />
             <div className="col-md-8 col-sm-12">
               <h3>Menu</h3>

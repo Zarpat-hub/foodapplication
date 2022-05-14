@@ -2,11 +2,18 @@ import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 import Refresh from "../context/Refresh";
 import { Carousel } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 import s1 from "../img/s1.jpg";
 
 const Homepage = () => {
   const loginContext = useContext(LoginContext);
+
+  let navigate = useNavigate();
+
+  if (LoginContext.role === "Worker") {
+    console.log("KONTO PRACOWNIKA");
+    navigate("/workpage");
+  }
 
   Refresh();
   return (

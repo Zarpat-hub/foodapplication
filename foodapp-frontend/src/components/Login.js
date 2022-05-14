@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+
 const Login = () => {
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
   let navigate = useNavigate();
+
   const submit = async (e) => {
     e.preventDefault();
     console.log("Loguj");
+    setError(false);
 
     await fetch("http://localhost:8080/Auth/token", {
       method: "POST",
@@ -27,8 +29,10 @@ const Login = () => {
     })
       .then((res) => {
         console.log(res);
-        setError(false);
-        navigate("/");
+        if (res.status === 200) {
+          setError(false);
+          navigate("/");
+        }
       })
       .catch((res) => {
         setPassword("");
@@ -55,6 +59,7 @@ const Login = () => {
                           type="email"
                           id="email"
                           className="form-control form-control-lg"
+                          value={email}
                           onChange={(e) => setMail(e.target.value)}
                           required
                         />
@@ -67,6 +72,7 @@ const Login = () => {
                         <input
                           type="password"
                           id="password"
+                          value={password}
                           className="form-control form-control-lg"
                           onChange={(e) => setPassword(e.target.value)}
                           required
@@ -84,7 +90,13 @@ const Login = () => {
                           required
                         />
                       </div>
-                      {error ? "Nieprawidłowy email lub hasło" : ""}
+                      {error ? (
+                        <div className="text-danger">
+                          Nieprawidłowy email lub hasło
+                        </div>
+                      ) : (
+                        ""
+                      )}
                       <p className="text-center text-muted mt-5 mb-0">
                         <LinkContainer to="/register">
                           <Nav.Link>Nie masz konta? Zarejestruj się</Nav.Link>

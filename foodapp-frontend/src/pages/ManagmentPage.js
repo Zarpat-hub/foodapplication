@@ -4,7 +4,6 @@ import Loader from "../components/Loader";
 import { Modal } from "react-bootstrap";
 import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
-//import { useNavigate } from "react-router-dom";
 
 const ManagmentPage = () => {
   let { name } = useParams();
@@ -17,26 +16,31 @@ const ManagmentPage = () => {
   const [workers, setWorkers] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
   const [cities, setCities] = useState([]);
+  const [cityID, setCityID] = useState("");
 
   const [showAddEmployee, setshowAddEmployee] = useState(false);
   const [showAddDish, setShowAddDish] = useState(false);
+
   const handleClose = () => {
     setShowAddDish(false);
     setshowAddEmployee(false);
+    setCityID("");
   };
-  const handleShowDish = () => setShowAddDish(true);
-  const handleShowEmployee = () => setshowAddEmployee(true);
+
+  const handleShowDish = () => {
+    setShowAddDish(true);
+  };
+  const handleShowEmployee = (cityIDpass) => {
+    console.log(cityIDpass);
+    setCityID(cityIDpass);
+    setshowAddEmployee(true);
+  };
 
   const [dishName, setDishName] = useState("");
   const [price, setPrice] = useState("");
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [cityID, setCityID] = useState("");
-
-  //let navigate = useNavigate();
-
-  // console.log(info);
 
   useEffect(() => {
     fetch(`http://localhost:8080/Restaurant/${name}`)
@@ -68,8 +72,14 @@ const ManagmentPage = () => {
     })
       .then((res) => {
         console.log(res);
+        let m = [...menu];
+        m.push({ name: dishName, price: price });
+        setMenu(m);
+        console.log(m);
         setDishName("");
         setPrice("");
+        handleClose();
+        window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);
@@ -99,18 +109,30 @@ const ManagmentPage = () => {
     })
       .then((res) => {
         console.log(res);
-        //setDishName("");
-        //setPrice("");
+        setDishName("");
+        setPrice("");
+        handleClose();
+        window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const deleteDish = (id) => {
+    console.log(id);
+
+    let tasks = [...menu];
+    tasks = tasks.filter((t) => t.id !== id);
+    setMenu(tasks);
+
+    console.log(tasks);
+  };
+
   const menuList = menu.map((dish) => (
     <div key={dish.id}>
       <p>{dish.name}</p>
-      <button>Usuń danie</button>
+      <button onClick={() => deleteDish(dish.id)}>Usuń danie</button>
     </div>
   ));
 
@@ -118,26 +140,17 @@ const ManagmentPage = () => {
     return (
       <div key={city.id}>
         <p>{city.name}</p>
-        <button>
-          {workers[city.name]
-            ? "Istnieje konto pracownicze"
-            : "Brak konta pracowniczego"}
-        </button>
+
+        {workers[city.name] ? (
+          "Konto pracownicze już istnieje"
+        ) : (
+          <button onClick={() => handleShowEmployee(city.id)}>
+            Brak konta pracowniczego
+          </button>
+        )}
       </div>
     );
   });
-
-  const list = cities.map((city) => {
-    return (
-      <option key={city.id} value={city.id}>
-        {city.name}
-      </option>
-    );
-  });
-
-  const handleSelect = (e) => {
-    setCityID(e.target.value);
-  };
 
   return (
     <div>
@@ -147,7 +160,7 @@ const ManagmentPage = () => {
         <section>
           <h1>Restauracja {info.name}</h1>
 
-          <button onClick={handleShowEmployee}>Dodaj konto pracownicze</button>
+          {/*<button onClick={handleShowEmployee}>Dodaj konto pracownicze</button>*/}
 
           <button onClick={handleShowDish}>Dodaj danie</button>
           <div>
@@ -206,13 +219,6 @@ const ManagmentPage = () => {
               <Modal.Title>Stwórz konto pracownicze</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="row p-2">
-                Miasto
-                <select onChange={handleSelect}>
-                  <option value="">-----</option>
-                  {list}
-                </select>
-              </div>
               <div className="row p-2">
                 Hasło:
                 <input

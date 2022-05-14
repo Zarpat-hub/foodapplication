@@ -21,6 +21,7 @@ import ProfilePage from "../pages/ProfilePage";
 import Order from "../pages/Order";
 import MyRestaurants from "../pages/MyRestaurants";
 import ManagmentPage from "../pages/ManagmentPage";
+import WorkerPage from "../pages/WorkerPage";
 
 const App = () => {
   const [name, setName] = useState(User.name);
@@ -40,6 +41,10 @@ const App = () => {
     setEmail(x[2].value);
     setRole(x[3].value);
     setToken(x[4].value);
+
+    if (role === "Worker") {
+      console.log("App.js worker account");
+    }
   };
 
   CheckLogin();
@@ -75,6 +80,7 @@ const App = () => {
               <Route path="/addRestaurant" element={<AddRestaurantPage />} />
               <Route path="/myrestaurants" element={<MyRestaurants />} />
               <Route path="/order" element={<Order />} />
+              <Route path="/workerpage" element={<WorkerPage />} />
               <Route path="*" element={<Errorpage />} />
             </Routes>
           </Container>

@@ -1,8 +1,10 @@
 import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 
 const Refresh = () => {
   const loginContext = useContext(LoginContext);
+  let navigate = useNavigate();
   useEffect(() => {
     try {
       (async () => {
@@ -18,6 +20,10 @@ const Refresh = () => {
         loginContext.setEmail(x[2].value);
         loginContext.setRole(x[3].value);
         loginContext.setToken(x[4].value);
+
+        if (loginContext.role === "Worker") {
+          navigate("/workerpage");
+        }
       })();
     } catch (e) {
       console.log(e);

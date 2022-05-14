@@ -28,26 +28,34 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <LinkContainer to="/restaurants">
-              <Nav.Link>Restauracje</Nav.Link>
-            </LinkContainer>
-
-            {loginContext.role === "Owner" ? (
+            {loginContext.role !== "Worker" ? (
               <>
-                <LinkContainer to="/myrestaurants">
-                  <Nav.Link>Moje restauracje</Nav.Link>
-                </LinkContainer>
+                {loginContext.role === "Owner" ? (
+                  <>
+                    <LinkContainer to="/myrestaurants">
+                      <Nav.Link>Moje restauracje</Nav.Link>
+                    </LinkContainer>
+                  </>
+                ) : (
+                  ""
+                )}
+                {loginContext.role === "User" || loginContext.role === "" ? (
+                  <LinkContainer to="/restaurants">
+                    <Nav.Link>Restauracje</Nav.Link>
+                  </LinkContainer>
+                ) : (
+                  ""
+                )}
+                {loginContext.role !== "" ? (
+                  <LinkContainer to="/profile">
+                    <Nav.Link>Profil</Nav.Link>
+                  </LinkContainer>
+                ) : (
+                  " "
+                )}
               </>
             ) : (
               ""
-            )}
-
-            {loginContext.role !== "" ? (
-              <LinkContainer to="/profile">
-                <Nav.Link>Profil</Nav.Link>
-              </LinkContainer>
-            ) : (
-              " "
             )}
             {loginContext.role !== "" ? (
               <Nav.Link onClick={logout}>Wyloguj</Nav.Link>
