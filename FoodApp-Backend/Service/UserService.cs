@@ -9,6 +9,7 @@ namespace FoodApp_Backend.Service
     {
         IEnumerable<Claim> GetUserClaimsByJWT(string jwt);
         User GetCurrentUser(string jwt);
+        void DeleteAccount(int userID);
     }
 
     public class UserService : IUserService
@@ -18,6 +19,26 @@ namespace FoodApp_Backend.Service
         public UserService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public void DeleteAccount(int userID)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userID);
+            var userRole = _context.UsersToRoles.FirstOrDefault(u => u.Id == userID);
+
+            _context.Users.Remove(user);
+            _context.UsersToRoles.Remove(userRole);
+
+            if(userRole.RoleID == 2)
+            {
+                var restaurants = _context.Restaurants.Where(r => r.OwnerId == userID).AsEnumerable();
+                foreach(var restaurant in restaurants)
+                {
+                    _context.Restaurants.Remove(restaurant);
+                }
+            }
+
+            _context.SaveChanges();
         }
 
         public IEnumerable<Claim> GetUserClaimsByJWT(string jwt)

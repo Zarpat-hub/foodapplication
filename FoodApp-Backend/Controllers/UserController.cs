@@ -17,6 +17,13 @@ namespace FoodApp_Backend.Controllers
             _userService = userService;
         }
 
+        [HttpDelete]
+        public ActionResult DeleteAccount(int userID)
+        {
+            _userService.DeleteAccount(userID);
+            return Ok();
+        }
+
         [HttpGet("claims")]
         public ActionResult<IEnumerable<Claim>> GetUserClaims()
         {
