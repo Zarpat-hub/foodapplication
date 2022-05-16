@@ -30,7 +30,7 @@ namespace FoodApp_Backend.Service
             var cityID = employeeRestaurant.CityID;
             var restaurantID = employeeRestaurant?.RestaurantID;
 
-            var orders = _context.Orders.Where(o => o.RestaurantID == restaurantID && o.CityID == cityID).AsEnumerable();
+            var orders = _context.Orders.Where(o => o.RestaurantID == restaurantID && o.CityID == cityID && o.Status == Order.StatusEnum.IN_PROCESS).AsEnumerable();
             _dishRepository.GetDishesForAllOrders(orders.ToArray());
             _dishRepository.GetRestaurantNameForAllOrders(orders.ToArray());
             _dishRepository.GetCityNameForAllOrders(orders.ToArray());
