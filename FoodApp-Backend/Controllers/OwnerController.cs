@@ -38,6 +38,13 @@ namespace FoodApp_Backend.Controllers
             _ownerService.AddItemToMenu(dish, restaurantId);
             return Ok();
         }
+        [HttpDelete("/menuItem")]
+        [Authorize(Roles = "Owner")]
+        public ActionResult DeleteItemFromMenu(int dishID)
+        {
+            _ownerService.DeleteItemFromMenu(dishID);
+            return Ok();
+        }
         [HttpPost("{restaurantId}/employee")]
         [Authorize(Roles ="Owner")]
         public ActionResult AddEmployeeAccount([FromBody]EmployeeDTO employeeDTO,int restaurantId)

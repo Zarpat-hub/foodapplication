@@ -10,6 +10,7 @@ namespace FoodApp_Backend.Service
     {
         IEnumerable<Restaurant> GetOwnedRestaurants(int ownerID);
         void AddItemToMenu(Dish dishModel, int restaurantID);
+        void DeleteItemFromMenu(int dishID);
     }
 
     public class OwnerService : IOwnerService
@@ -44,6 +45,17 @@ namespace FoodApp_Backend.Service
             dishRestaurant.RestaurantId = restaurantID;
             dishRestaurant.DishId = dish.Id;
             _context.Add(dishRestaurant);
+            _context.SaveChanges();
+        }
+
+        public void DeleteItemFromMenu(int dishID)
+        {
+            var dish = _context.Dishes.FirstOrDefault(d => d.Id == dishID);
+            var dishRestaurant = _context.DishesToRestaurants.FirstOrDefault(d => d.DishId == dishID);
+
+            _context.Dishes.Remove(dish);
+            _context.DishesToRestaurants.Remove(dishRestaurant);
+
             _context.SaveChanges();
         }
 
