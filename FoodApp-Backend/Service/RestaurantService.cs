@@ -118,7 +118,7 @@ namespace FoodApp_Backend.Service
             restaurant.ReviewsNumber++;
             _context.SaveChanges();
 
-            restaurant.Rating /= restaurant.ReviewsNumber;
+            restaurant.AverageRating = restaurant.Rating / restaurant.ReviewsNumber;
             _context.SaveChanges();
         }
     }

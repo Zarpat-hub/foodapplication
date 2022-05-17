@@ -21,6 +21,7 @@ namespace FoodApp_Backend.Controllers
         public ActionResult DeleteAccount(int userID)
         {
             _userService.DeleteAccount(userID);
+            Response.Cookies.Delete("jwt");
             return Ok();
         }
 
