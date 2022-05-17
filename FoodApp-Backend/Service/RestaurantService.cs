@@ -11,6 +11,7 @@ namespace FoodApp_Backend.Service
         IEnumerable<Restaurant> GetRestaurants();
         Restaurant GetRestaurantById(int id);
         IEnumerable<Restaurant> GetRestaurantsByCityName(String cityName);
+        void RateRestaurant(int restaurantID, double rate);
     }
 
     public class RestaurantService : IRestaurantService
@@ -108,6 +109,17 @@ namespace FoodApp_Backend.Service
                 _context.Add(restaurantCity);
                 _context.SaveChanges();
             }
+        }
+
+        public void RateRestaurant(int restaurantID,double rate)
+        {
+            var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == restaurantID);
+            restaurant.Rating += rate;
+            restaurant.ReviewsNumber++;
+            _context.SaveChanges();
+
+            restaurant.Rating /= restaurant.ReviewsNumber;
+            _context.SaveChanges();
         }
     }
 }

@@ -57,5 +57,12 @@ namespace FoodApp_Backend.Controllers
 
             return Ok();
         }
+        [HttpPost("rating/{id}")]
+        public ActionResult RateRestaurant([FromBody]double rate, int id)
+        {
+            _restaurantService.RateRestaurant(id, rate);
+
+            return Ok();
+        }
     }
 }

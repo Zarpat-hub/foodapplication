@@ -14,6 +14,9 @@ namespace FoodApp_Backend.Models
  
         public int OwnerId { get; set; }
 
+        public double Rating { get; set; } = 0;
+        public int ReviewsNumber { get; set; } = 0;
+
         [NotMapped]
         public IEnumerable<Dish> Menu { get; set; }
         [NotMapped]
