@@ -73,8 +73,9 @@ const ManagmentPage = () => {
       .then((res) => {
         console.log(res);
         let m = [...menu];
-        m.push({ name: dishName, price: price });
+        m.push({ key: 30, name: dishName, price: price });
         setMenu(m);
+
         console.log(m);
         setDishName("");
         setPrice("");
@@ -122,11 +123,20 @@ const ManagmentPage = () => {
   const deleteDish = (id) => {
     console.log(id);
 
+    fetch(`http://localhost:8080/menuItem?dishID=${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: Bearer,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    });
+
     let tasks = [...menu];
     tasks = tasks.filter((t) => t.id !== id);
     setMenu(tasks);
-
-    console.log(tasks);
+    //console.log(tasks);
   };
 
   const menuList = menu.map((dish) => (

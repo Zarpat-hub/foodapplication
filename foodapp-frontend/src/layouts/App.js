@@ -41,6 +41,7 @@ const App = () => {
     setEmail(x[2].value);
     setRole(x[3].value);
     setToken(x[4].value);
+    console.log("TEST");
 
     if (role === "Worker") {
       console.log("App.js worker account");

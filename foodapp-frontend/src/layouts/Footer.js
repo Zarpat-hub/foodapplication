@@ -25,8 +25,15 @@ const Footer = () => {
         </Row>
         <Row>
           <div className="d-flex justify-content-center align-items-center flex-column">
-            <h6>Created by: Krystian Włodarczyk</h6>
-            <p>{new Date().getFullYear()}</p>
+            <h5>Twórcy</h5>
+            <ul className="list-inline text-center">
+              <li className="list-inline-item">Krystain Włodarczyk</li>
+              <li className="list-inline-item">Kinga Wieloch</li>
+              <li className="list-inline-item">Patryk Zaręba</li>
+              <li className="list-inline-item">Kacper Kubacki</li>
+              <li className="list-inline-item">Paweł Golau</li>
+            </ul>
+            <h5>{new Date().getFullYear()}</h5>
           </div>
         </Row>
       </Container>

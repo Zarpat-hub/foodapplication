@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
@@ -6,6 +6,7 @@ import Cart from "../components/Cart";
 import Menu from "../components/Menu";
 import Order from "../pages/Order";
 import ReactStars from "react-stars";
+import { LoginContext } from "../context/LoginContext";
 
 const Restaurant = () => {
   let { name } = useParams();
@@ -17,6 +18,10 @@ const Restaurant = () => {
 
   const [show, setShow] = useState(false);
 
+  const [averageRating, setAverageRating] = useState("");
+  const [revievsNumber, setRevievsNumber] = useState("");
+  const [rating, setRating] = useState("");
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -27,6 +32,9 @@ const Restaurant = () => {
         setMenu(d.menu);
         setCities(d.cities);
         setInfo(d);
+        setRating(d.rating);
+        setAverageRating(d.averageRating);
+        setRevievsNumber(d.reviewsNumber);
         setLoaded(true);
       })
       .catch((error) => console.log(error));
@@ -60,8 +68,35 @@ const Restaurant = () => {
     }
   };
 
-  const test = (e) => {
-    console.log(e);
+  const user = useContext(LoginContext);
+  const token = user.token;
+  const Bearer = `Bearer ${token}`;
+
+  const revievFunction = (e) => {
+    //console.log(e);
+    //console.log(name);
+    fetch(`http://localhost:8080/Restaurant/rating/${name}`, {
+      method: "POST",
+      headers: {
+        Authorization: Bearer,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+      body: e,
+    });
+
+    setRevievsNumber((prev) => prev + 1);
+
+    console.log(rating);
+    console.log(averageRating);
+    console.log(rating + e);
+    console.log(revievsNumber);
+
+    const x = (rating + e) / parseInt(revievsNumber);
+    console.log(x);
+    setRating(rating + e);
+    setAverageRating(x);
   };
 
   return (
@@ -72,8 +107,10 @@ const Restaurant = () => {
         <section>
           <div className="row pt-2">
             <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>
-            <p>Ocena</p>
-            <ReactStars onChange={test} size={24} />
+            <p>
+              Ocena {averageRating.toFixed(2)} ({revievsNumber})
+            </p>
+            <ReactStars onChange={revievFunction} size={24} />
             <hr />
             <div className="col-md-8 col-sm-12">
               <h3>Menu</h3>

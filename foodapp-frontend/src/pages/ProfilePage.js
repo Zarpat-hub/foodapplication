@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import { useEffect } from "react";
 import Loader from "../components/Loader";
 import OrderDetails from "../components/OrderDetails";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const user = useContext(LoginContext);
@@ -13,6 +14,8 @@ const ProfilePage = () => {
   const [mount, setMonut] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const navigate = useNavigate();
 
   const orders = useRef();
   useEffect(() => {
@@ -52,8 +55,26 @@ const ProfilePage = () => {
     }
   }, [activeOrders, mount, user.id]);
 
+  const token = user.token;
+  const Bearer = `Bearer ${token}`;
+
   const deleteAccount = () => {
     console.log("delete");
+    console.log(user.id);
+
+    fetch(`http://localhost:8080/User?userID=${user.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: Bearer,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    });
+
+    user.setName("");
+    user.setRole("");
+    navigate("/");
   };
 
   return (

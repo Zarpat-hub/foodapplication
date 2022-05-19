@@ -77,7 +77,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
           <Modal.Body>
             <div className="row p-2">
               Wybierz miasto:
-              <select onChange={handleSelect}>
+              <select onChange={handleSelect} className="form-select">
                 <option value="">-----</option>
                 {citySelect}
               </select>
@@ -86,6 +86,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
               Ulica:
               <input
                 type="text"
+                className="form-control"
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
                 required
@@ -95,6 +96,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
               Numer domu:
               <input
                 type="text"
+                className="form-control"
                 value={houseNumber}
                 onChange={(e) => setHouseNumber(e.target.value)}
                 required
