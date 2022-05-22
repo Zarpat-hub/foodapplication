@@ -16,23 +16,13 @@ const OrderDetails = ({
   const cData = createdData.slice(0, 10);
   const cHour = createdData.slice(11, 16);
 
-  //const received = (id) => {
-  //console.log(id);
-  //console.log(all);
-
-  //let tasks = [...all];
-  // tasks = tasks.filter((t) => t.id !== id);
-  //setOr(tasks);
-  //console.log(tasks);
-  //};
-
   return (
     <section className="row card p-3 mt-2">
       <div className="d-flex flex-column ">
         <div>
-          <p>
-            {city} {cData} {cHour + 2}
-          </p>
+          <p>Miasto: {city}</p>
+          <p>Data: {cData}</p>
+          <p>Godzina: {cHour}</p>
           <button onClick={handleShow} className="btn-primary align-self-end">
             Szczegóły
           </button>

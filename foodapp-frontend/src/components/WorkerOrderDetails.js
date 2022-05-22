@@ -4,6 +4,7 @@ const WorkerOrderDetails = ({
   city,
   street,
   houseNumber,
+  setDishes,
   dishes,
   createdData,
   orderID,
@@ -26,7 +27,7 @@ const WorkerOrderDetails = ({
       credentials: "include",
     }).then((res) => {
       console.log(res);
-      //usuń już to z state
+      window.location.reload(false);
     });
   };
   return (
@@ -46,10 +47,10 @@ const WorkerOrderDetails = ({
             );
           })}
           <button
-            className="btn-primary align-self-end"
+            className="btn-primary align-self-end mt-2"
             onClick={() => sendOrder(orderID)}
           >
-            Wyślij
+            Gotowe
           </button>
         </div>
       </div>

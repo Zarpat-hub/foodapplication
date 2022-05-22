@@ -1,6 +1,5 @@
 import "../css/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Container } from "react-bootstrap";
 
 //layout
 import Nav from "./Nav";
@@ -41,7 +40,10 @@ const App = () => {
     setEmail(x[2].value);
     setRole(x[3].value);
     setToken(x[4].value);
-    console.log("TEST");
+
+    if (role === "Owner") {
+      console.log("App.js owner account");
+    }
 
     if (role === "Worker") {
       console.log("App.js worker account");
@@ -68,23 +70,21 @@ const App = () => {
       >
         <Nav />
         <section className="min-vh-100">
-          <Container>
-            <Routes>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/restaurants" element={<Restaurants />} />
-              <Route path="/login" element={<Loginpage />} />
-              <Route path="/restaurants/:name" element={<RestaurantPage />} />
-              <Route path="/management/:name" element={<ManagmentPage />} />
-              <Route path="/register" element={<Registerpage />} />
-              <Route path="/registerowner" element={<RegisterpageOwner />} />
-              <Route path="/addRestaurant" element={<AddRestaurantPage />} />
-              <Route path="/myrestaurants" element={<MyRestaurants />} />
-              <Route path="/order" element={<Order />} />
-              <Route path="/workerpage" element={<WorkerPage />} />
-              <Route path="*" element={<Errorpage />} />
-            </Routes>
-          </Container>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/restaurants" element={<Restaurants />} />
+            <Route path="/login" element={<Loginpage />} />
+            <Route path="/restaurants/:name" element={<RestaurantPage />} />
+            <Route path="/management/:name" element={<ManagmentPage />} />
+            <Route path="/register" element={<Registerpage />} />
+            <Route path="/registerowner" element={<RegisterpageOwner />} />
+            <Route path="/addRestaurant" element={<AddRestaurantPage />} />
+            <Route path="/myrestaurants" element={<MyRestaurants />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/workerpage" element={<WorkerPage />} />
+            <Route path="*" element={<Errorpage />} />
+          </Routes>
         </section>
         <Footer />
       </LoginContext.Provider>

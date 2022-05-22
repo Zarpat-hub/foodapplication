@@ -136,13 +136,16 @@ const ManagmentPage = () => {
     let tasks = [...menu];
     tasks = tasks.filter((t) => t.id !== id);
     setMenu(tasks);
-    //console.log(tasks);
   };
 
   const menuList = menu.map((dish) => (
-    <div key={dish.id}>
-      <p>{dish.name}</p>
-      <button onClick={() => deleteDish(dish.id)}>Usuń danie</button>
+    <div key={dish.id} className="card mt-2">
+      <div className="d-flex p-4 justify-content-between">
+        <h4>{dish.name}</h4>
+        <button className="btn btn-danger" onClick={() => deleteDish(dish.id)}>
+          X
+        </button>
+      </div>
     </div>
   ));
 
@@ -152,9 +155,12 @@ const ManagmentPage = () => {
         <p>{city.name}</p>
 
         {workers[city.name] ? (
-          "Konto pracownicze już istnieje"
+          ""
         ) : (
-          <button onClick={() => handleShowEmployee(city.id)}>
+          <button
+            className="btn btn-primary"
+            onClick={() => handleShowEmployee(city.id)}
+          >
             Brak konta pracowniczego
           </button>
         )}
@@ -167,21 +173,23 @@ const ManagmentPage = () => {
       {!isLoaded ? (
         <Loader />
       ) : (
-        <section>
-          <h1>Restauracja {info.name}</h1>
-
-          {/*<button onClick={handleShowEmployee}>Dodaj konto pracownicze</button>*/}
-
-          <button onClick={handleShowDish}>Dodaj danie</button>
-          <div>
-            <h2>Menu</h2>
-            {menuList}
+        <section className="container mt-4">
+          <div className="d-flex flex-column flex-lg-row">
+            <div className="col-12 col-lg-6">
+              <div className="d-flex justify-content-between">
+                <h2>Menu</h2>
+                <button className="btn btn-primary" onClick={handleShowDish}>
+                  Dodaj danie
+                </button>
+              </div>
+              <div className="scroll-y">{menuList}</div>
+            </div>
+            <div className="col-12 col-lg-6 text-lg-end">
+              <h2>Dostępne miasta</h2>
+              {citiesList}
+            </div>
           </div>
 
-          <div>
-            <h2>Dostępne miasta</h2>
-            {citiesList}
-          </div>
           <Modal
             show={showAddDish}
             onHide={handleClose}

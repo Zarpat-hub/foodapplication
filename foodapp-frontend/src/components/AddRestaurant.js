@@ -123,7 +123,7 @@ const AddRestaurant = () => {
                         }}
                         displayValue="name"
                       />
-                      <div className="d-flex justify-content-center">
+                      <div className="d-flex justify-content-center p-5">
                         <input
                           type="submit"
                           className="btn btn-success btn-block btn-lg gradient-custom-4 "

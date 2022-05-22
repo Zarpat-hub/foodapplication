@@ -1,3 +1,48 @@
+* {
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
+}
+
+.x {
+  margin-top: -10vh;
+}
+
+.xxx {
+  height: 100vh;
+}
+
+.xd {
+  margin-top: -20vh;
+}
+
+.xd2 {
+  margin-top: 80vh;
+}
+
+.size {
+  height: 100vh;
+}
+
+.card-x:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 1em #198754;
+}
+.card {
+  transition: 0.3s;
+}
+
+.homepage-bg {
+  margin-top: -56px;
+}
+
+.homepage-bg-x {
+  padding-top: 300px;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+  height: 80vh;
+  overflow-x: hidden;
 }

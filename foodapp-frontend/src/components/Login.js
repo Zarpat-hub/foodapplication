@@ -91,7 +91,7 @@ const Login = () => {
                         />
                       </div>
                       {error ? (
-                        <div className="text-danger">
+                        <div className="text-danger text-center mt-4">
                           Nieprawidłowy email lub hasło
                         </div>
                       ) : (

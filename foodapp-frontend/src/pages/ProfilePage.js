@@ -78,24 +78,34 @@ const ProfilePage = () => {
   };
 
   return (
-    <section>
+    <section className="container mt-3">
       <h2>Dzień dobry {user.name}!</h2>
       <p>id: {user.id}</p>
       <p>{user.email}</p>
       <p>{user.role}</p>
+      <button className="btn btn-danger" onClick={handleShow}>
+        Usuń konto
+      </button>
+
       {user.role === "User" ? (
-        <>
-          <h4>Aktualne Zamówienia</h4>
-          <div className="col-6">{mount ? orders.current : <Loader />}</div>
-          <h4>Historia zamówień</h4>
-        </>
+        <div className="d-flex flex-column flex-md-row justify-content-md-between mt-2 mb-5">
+          <div className="col-12 col-md-6">
+            <h4>Aktualne zamówienia</h4>
+            <div className="scroll-y">
+              {mount ? orders.current : <Loader />}
+            </div>
+          </div>
+          <div className="col-12 col-md-6 xy  ">
+            <h4>Historia zamówień</h4>
+            <div className="scroll-y">
+              {mount ? orders.current : <Loader />}
+            </div>
+          </div>
+        </div>
       ) : (
         ""
       )}
 
-      <button className="btn btn-danger" onClick={handleShow}>
-        Usuń konto
-      </button>
       <Modal
         show={show}
         onHide={handleClose}

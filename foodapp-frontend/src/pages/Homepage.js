@@ -1,53 +1,38 @@
 import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 import Refresh from "../context/Refresh";
-import { Carousel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import s1 from "../img/s1.jpg";
+import bg2 from "../img/s2.jpg";
+import bg3 from "../img/s3.jpg";
+//import BackgroundSlider from "react-background-slider";
+import { useEffect } from "react";
 
 const Homepage = () => {
   const loginContext = useContext(LoginContext);
 
   let navigate = useNavigate();
 
-  if (LoginContext.role === "Worker") {
-    console.log("KONTO PRACOWNIKA");
-    navigate("/workpage");
-  }
+  useEffect(() => {
+    if (loginContext.role === "Worker") {
+      console.log("KONTO PRACOWNIKA");
+      navigate("/workpage");
+    }
+    if (loginContext.role === "Owner") {
+      console.log("KONTO PRACOWNIKA");
+      navigate("/myrestaurants");
+    }
+  });
 
   Refresh();
   return (
-    <section>
-      <section className="text-center p-2">
-        <h2>Homepage</h2>
-        {loginContext.name}
-        {loginContext.role}
-      </section>
-      <Carousel>
-        <Carousel.Item interval={1000}>
-          <img className="d-block w-100" src={s1} alt="First slide" />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img className="d-block w-100" src={s1} alt="Second slide" />
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img className="d-block w-100" src={s1} alt="Third slide" />
-          <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+    <section className="homepage-bg">
+      <div className="homepage-bg-x container text-center d-flex flex-column text-gray">
+        <h2>FoodApp</h2>
+        <p>coś tam coś tam</p>
+      </div>
+      <div>
+       
+      </div>
     </section>
   );
 };

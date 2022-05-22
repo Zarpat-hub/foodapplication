@@ -28,23 +28,37 @@ const MyRestaurants = () => {
   }, [Bearer]);
 
   return (
-    <section>
-      <h2>Twoje restauracje</h2>
+    <section className="container mt-3">
+      <div className="d-flex justify-content-between">
+        <h2>Twoje restauracje</h2>
+        <LinkContainer to="/addRestaurant">
+          <Nav.Link>
+            <button className="btn btn-primary">Dodaj restaurację</button>
+          </Nav.Link>
+        </LinkContainer>
+      </div>
+      <hr />
       {restaurants.map((restaurant) => (
-        <div key={restaurant.id}>
-          <p>{restaurant.name}</p>
-          <LinkContainer to={`/management/${restaurant.id}`}>
-            <Nav.Link>
-              <p>Zarządzaj restauracją</p>
-            </Nav.Link>
-          </LinkContainer>
-          <hr />
+        <div key={restaurant.id} className="d-flex  p-3 mt-3 card">
+          <div className="d-flex justify-content-between">
+            <h3>{restaurant.name}</h3>
+            <div>
+              <div className="d-sm-flex d-xs-flex">
+                <LinkContainer to={`/management/${restaurant.id}`}>
+                  <Nav.Link>
+                    <button className="btn btn-success">
+                      Zarządzaj restauracją
+                    </button>
+                  </Nav.Link>
+                </LinkContainer>
+                <Nav.Link>
+                  <button className="btn btn-danger">X</button>
+                </Nav.Link>
+              </div>
+            </div>
+          </div>
         </div>
       ))}
-
-      <LinkContainer to="/addRestaurant">
-        <Nav.Link>Dodaj restaurację</Nav.Link>
-      </LinkContainer>
     </section>
   );
 };

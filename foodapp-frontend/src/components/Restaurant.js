@@ -3,7 +3,7 @@ import { Nav } from "react-bootstrap";
 
 const Restaurant = ({ id, name, image }) => {
   return (
-    <div key={id} className="card col-md-3 col-sm-4 m-2 ">
+    <div key={id} className="card col-sm-3 col-md-3 col-lg-2 m-2 card-x">
       <LinkContainer to={`/restaurants/${id}`}>
         <Nav.Link>
           <img
@@ -11,7 +11,7 @@ const Restaurant = ({ id, name, image }) => {
             className="rounded card-img-top"
             alt={name}
           />
-          <div className="card-body d-flex justify-content-center">
+          <div className="card-body d-flex justify-content-center text-dark">
             <h2>{name}</h2>
           </div>
         </Nav.Link>

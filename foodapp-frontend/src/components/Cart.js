@@ -12,7 +12,11 @@ const Cart = ({ cartItems, removeProduct, openOrder }) => {
     if (loginContext.role === "") {
       return (
         <LinkContainer to="/login">
-          <Nav.Link>Zaloguj się aby złożyć zamówienie</Nav.Link>
+          <Nav.Link>
+            <button className="btn btn-success">
+              Zaloguj się aby złożyć zamówienie
+            </button>
+          </Nav.Link>
         </LinkContainer>
       );
     } else {
@@ -31,11 +35,11 @@ const Cart = ({ cartItems, removeProduct, openOrder }) => {
       {cartItems.length === 0 ? (
         <p>Dodaj produkty do zamówienia</p>
       ) : (
-        <div>
+        <div className="d-flex flex-column ">
           {cartItems.map((item) => (
             <div key={item.id} className="row">
-              <div className="col-sm-8">{item.name}</div>
-              <div className="col-sm-4">
+              <div className="d-flex justify-content-between">
+                {item.name}
                 <button
                   className="btn btn-danger btn-block"
                   onClick={() => removeProduct(item)}
@@ -43,9 +47,11 @@ const Cart = ({ cartItems, removeProduct, openOrder }) => {
                   -
                 </button>
               </div>
+
               <div className="col text-right mb-5">
                 {item.qty} x {item.price.toFixed(2)}PLN
               </div>
+              <hr />
             </div>
           ))}
 

@@ -87,15 +87,8 @@ const Restaurant = () => {
     });
 
     setRevievsNumber((prev) => prev + 1);
-
-    console.log(rating);
-    console.log(averageRating);
-    console.log(rating + e);
-    console.log(revievsNumber);
-
-    const x = (rating + e) / parseInt(revievsNumber);
-    console.log(x);
     setRating(rating + e);
+    const x = (rating + e) / (parseInt(revievsNumber) + 1);
     setAverageRating(x);
   };
 
@@ -104,19 +97,25 @@ const Restaurant = () => {
       {!isLoaded ? (
         <Loader />
       ) : (
-        <section>
-          <div className="row pt-2">
-            <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>
-            <p>
-              Ocena {averageRating.toFixed(2)} ({revievsNumber})
-            </p>
-            <ReactStars onChange={revievFunction} size={24} />
-            <hr />
-            <div className="col-md-8 col-sm-12">
-              <h3>Menu</h3>
-              <Menu products={menu} onAdd={addProduct} />
+        <section className="container min-vh-100 mt-3">
+          <div className="d-flex justify-content-between">
+            <div>
+              <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>
             </div>
-            <div className="col-md-4 col-sm-12">
+            <div>
+              Ocena {averageRating.toFixed(2)} ({revievsNumber})
+              <ReactStars onChange={revievFunction} size={24} />
+            </div>
+          </div>
+          <div className="row pt-2">
+            <hr />
+            <div className="col-md-8 col-sm-12 scroll-y">
+              <h3>Menu</h3>
+              <div>
+                <Menu products={menu} onAdd={addProduct} />
+              </div>
+            </div>
+            <div className="col-md-4 col-sm-12 text-md-end">
               <Cart
                 cartItems={cartItems}
                 removeProduct={removeProduct}

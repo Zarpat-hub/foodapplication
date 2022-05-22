@@ -45,7 +45,7 @@ const Restaurants = () => {
       {!isLoaded ? (
         <Loader />
       ) : (
-        <section>
+        <section className="container-fluid">
           <div className="row p-5 text-center d-flex justify-content-center">
             <h3>Wyszukaj restauracje w swojej miejscowości!</h3>
             <form onSubmit={sub}>
@@ -58,7 +58,6 @@ const Restaurants = () => {
             </form>
           </div>
           <div className="text-center">
-            <h4>Lista restauracji</h4>
             <div className="row d-flex justify-content-center">
               {restaurants}
             </div>
