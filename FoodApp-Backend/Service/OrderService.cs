@@ -11,6 +11,7 @@ namespace FoodApp_Backend.Service
     public interface IOrderService
     {
         void MakeOrder(OrderDTO[] orderDTO,string jwt);
+        void MarkAsDelivered(int orderID);
         IEnumerable<Order> GetAllUserOrders(int userID);
         IEnumerable<Order> GetActiveUserOrders(int userID);
         IEnumerable<Order> GetFinishedUserOrders(int userID);
@@ -56,6 +57,14 @@ namespace FoodApp_Backend.Service
                 _context.Add(dishToOrder);
                 _context.SaveChanges();
             }
+        }
+
+        public void MarkAsDelivered(int orderID)
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.Id == orderID);
+            order.Status = Order.StatusEnum.FINISHED;
+
+            _context.SaveChanges();
         }
 
         public IEnumerable<Order> GetAllUserOrders(int userID)

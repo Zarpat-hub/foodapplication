@@ -1,4 +1,5 @@
-﻿using FoodApp_Backend.Models;
+﻿using FoodApp_Backend.Data;
+using FoodApp_Backend.Models;
 using FoodApp_Backend.Models.DTOs;
 using FoodApp_Backend.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +25,14 @@ namespace FoodApp_Backend.Controllers
         {
             var jwt = Request.Cookies["jwt"];
             _orderService.MakeOrder(orderDTOs, jwt);
+            return Ok();
+        }
+        [HttpPost]
+        [Authorize(Roles = "User")]
+        public ActionResult MarkAsDelivered(int orderID)
+        {
+            _orderService.MarkAsDelivered(orderID);
+
             return Ok();
         }
 
