@@ -69,7 +69,7 @@ const App = () => {
         }}
       >
         <Nav />
-        <section className="min-vh-100">
+        <section className="min-vh-100 containerXD">
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/profile" element={<ProfilePage />} />

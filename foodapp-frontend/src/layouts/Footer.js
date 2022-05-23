@@ -3,7 +3,7 @@ import { BsFacebook, BsInstagram } from "react-icons/bs";
 import { AiFillTwitterCircle } from "react-icons/ai";
 const Footer = () => {
   return (
-    <footer className="bg-success text-white">
+    <footer className="bg-success footerXD text-white">
       <Container>
         <Row>
           <div className="d-flex justify-content-center p-5">

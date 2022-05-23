@@ -20,7 +20,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="success" variant="dark">
+    <Navbar collapseOnSelect expand="lg" className="footerXD" variant="dark">
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>FoodApp</Navbar.Brand>

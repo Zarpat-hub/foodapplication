@@ -27,7 +27,7 @@
 
 .card-x:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 1em #198754;
+  box-shadow: 0 0 1em rgb(248, 196, 113);
 }
 .card {
   transition: 0.3s;
@@ -45,4 +45,17 @@
   overflow-y: scroll;
   height: 80vh;
   overflow-x: hidden;
+}
+
+.footerXD {
+  background: rgb(237,41,41);
+background: linear-gradient(90deg, rgba(237,41,41,1) 0%, rgba(255,148,20,1) 100%);
+}
+
+.containerXD {
+  background-color: #FBFCFC;
+}
+
+.btn-success {
+  background-color: #ff9414;
 }
