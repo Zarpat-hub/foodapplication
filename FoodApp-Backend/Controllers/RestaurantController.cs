@@ -57,6 +57,13 @@ namespace FoodApp_Backend.Controllers
 
             return Ok();
         }
+        [HttpDelete]
+        public ActionResult DeleteRestaurant(int restaurantID)
+        {
+            _restaurantService.DeleteRestaurant(restaurantID);
+
+            return Ok();
+        }
         [HttpPost("rating/{id}")]
         public ActionResult RateRestaurant([FromBody]double rate, int id)
         {

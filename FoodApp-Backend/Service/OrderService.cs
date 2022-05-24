@@ -31,11 +31,19 @@ namespace FoodApp_Backend.Service
 
         public void MakeOrder([FromBody]OrderDTO[] orderDTO,string jwt)
         {
+            var restaurantID = orderDTO[0].RestaurantID;
+
             Order order = new Order();
-            order.RestaurantID = orderDTO[0].RestaurantID;
+            order.RestaurantID = restaurantID;
 
             var userId = _userService.GetUserClaimsByJWT(jwt).FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             order.UserID = Convert.ToInt32(userId);
+            var user = _context.Users.FirstOrDefault(u => u.Id == Convert.ToInt32(userId));
+
+            var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == restaurantID);
+            var owner = _context.Users.FirstOrDefault(u => u.Id == restaurant.OwnerId);
+
+            double totalCost = 0;
 
             Console.WriteLine(userId);
 
@@ -55,7 +63,26 @@ namespace FoodApp_Backend.Service
                 dishToOrder.Quantity = dto.Quantity;
                 _context.Add(dishToOrder);
                 _context.SaveChanges();
+
+                var dish = _context.Dishes.FirstOrDefault(d => d.Id == dto.DishID);
+                totalCost += dish.Price;
             }
+
+            if (user.AccountBalance < totalCost)
+                throw new BadHttpRequestException("Not enought account balance");
+
+            user.AccountBalance -= totalCost;
+            double tax = totalCost * 0.05;
+            owner.AccountBalance += totalCost - tax;
+
+            var admin = (from u in _context.Users
+                         join u2r in _context.UsersToRoles on u.Id equals u2r.UserID
+                         where u2r.RoleID == 4
+                         select u).FirstOrDefault();
+
+            admin.AccountBalance += tax;
+
+            _context.SaveChanges();
         }
 
         public void MarkAsDelivered(int orderID)
