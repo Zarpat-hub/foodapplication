@@ -4,7 +4,7 @@ import "../css/App.css";
 const Loader = () => {
   return (
     <section>
-      <Container className="d-flex align-items-center justify-content-center xxx">
+      <Container className="d-flex align-items-center justify-content-center loaderHeight">
         <Row>
           <ClipLoader />
         </Row>

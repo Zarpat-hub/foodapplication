@@ -1,8 +1,8 @@
 import { Modal } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { LoginContext } from "../context/LoginContext";
 const OrderDetails = ({
   id,
-  update,
   city,
   street,
   houseNumber,
@@ -15,6 +15,26 @@ const OrderDetails = ({
 
   const cData = createdData.slice(0, 10);
   const cHour = createdData.slice(11, 16);
+
+  const user = useContext(LoginContext);
+  const token = user.token;
+  const Bearer = `Bearer ${token}`;
+
+  const update = (id) => {
+    console.log("Update", id);
+    fetch(`http://localhost:8080/Order/delivered?orderID=${id}`, {
+      method: "POST",
+      headers: {
+        Authorization: Bearer,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    }).then((res) => {
+      console.log(res);
+      window.location.reload(false);
+    });
+  };
 
   return (
     <section className="row card p-3 mt-2">

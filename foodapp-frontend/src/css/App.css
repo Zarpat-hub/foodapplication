@@ -1,44 +1,23 @@
 * {
   box-sizing: border-box;
 }
+body {
+  background-color: #fbfcfc;
+}
 .App {
   text-align: center;
 }
 
-.x {
-  margin-top: -10vh;
-}
-
-.xxx {
-  height: 100vh;
-}
-
-.xd {
-  margin-top: -20vh;
-}
-
-.xd2 {
-  margin-top: 80vh;
-}
-
-.size {
+.loaderHeight {
   height: 100vh;
 }
 
 .card-x:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 1em rgb(248, 196, 113);
+  box-shadow: 0 0 1em orange;
 }
 .card {
   transition: 0.3s;
-}
-
-.homepage-bg {
-  margin-top: -56px;
-}
-
-.homepage-bg-x {
-  padding-top: 300px;
 }
 
 .scroll-y {
@@ -47,15 +26,68 @@
   overflow-x: hidden;
 }
 
-.footerXD {
-  background: rgb(237,41,41);
-background: linear-gradient(90deg, rgba(237,41,41,1) 0%, rgba(255,148,20,1) 100%);
-}
-
-.containerXD {
-  background-color: #FBFCFC;
+.gradient {
+  background: rgb(237, 41, 41);
+  background: linear-gradient(
+    90deg,
+    rgba(237, 41, 41, 1) 0%,
+    rgba(255, 148, 20, 1) 100%
+  );
 }
 
 .btn-success {
   background-color: #ff9414;
+  border: 1px solid #ff9414;
+}
+
+.btn-success:hover {
+  background-color: #cf5117;
+  border: 1px solid #cf5117;
+}
+
+.btn-success:focus {
+  background-color: #cf5117;
+  border: 1px solid #cf5117;
+}
+
+.bg1 {
+  background: url("../img/s1.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  position: relative;
+}
+.bg2 {
+  background: url("../img/s2.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  position: relative;
+}
+.bg3 {
+  background: url("../img/s3.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  position: relative;
+}
+
+.pos-relative {
+  position: relative;
+  z-index: 1;
+}
+
+.pos-absolute {
+  position: absolute;
+  z-index: 2;
+  left: 40%;
+  top: 40%;
+  color: #444;
+}
+
+.homepage {
+  color: whitesmoke;
+}
+.marginBetweenButtons {
+  margin: 0 10px 0 0;
 }

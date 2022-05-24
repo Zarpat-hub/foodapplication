@@ -97,7 +97,7 @@ const Restaurant = () => {
       {!isLoaded ? (
         <Loader />
       ) : (
-        <section className="container min-vh-100 mt-3">
+        <section className="container min-vh-100 mt-3 containerXD">
           <div className="d-flex justify-content-between">
             <div>
               <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>

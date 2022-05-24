@@ -14,7 +14,7 @@ const Refresh = () => {
         });
 
         const x = await res.json();
-        console.log(x);
+        // console.log(x);
         loginContext.setID(x[0].value);
         loginContext.setName(x[1].value);
         loginContext.setEmail(x[2].value);

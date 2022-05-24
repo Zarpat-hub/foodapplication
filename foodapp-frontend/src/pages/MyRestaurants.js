@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
@@ -31,11 +29,16 @@ const MyRestaurants = () => {
     <section className="container mt-3">
       <div className="d-flex justify-content-between">
         <h2>Twoje restauracje</h2>
-        <LinkContainer to="/addRestaurant">
+        <div className="d-flex">
+          <LinkContainer to="/addRestaurant">
+            <Nav.Link>
+              <button className="btn btn-primary">Dodaj restaurację</button>
+            </Nav.Link>
+          </LinkContainer>
           <Nav.Link>
-            <button className="btn btn-primary">Dodaj restaurację</button>
+            <button className="btn btn-danger">Usuń konto</button>
           </Nav.Link>
-        </LinkContainer>
+        </div>
       </div>
       <hr />
       {restaurants.map((restaurant) => (

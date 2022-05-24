@@ -1,16 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LoginContext } from "../context/LoginContext";
-import Refresh from "../context/Refresh";
 import { useNavigate } from "react-router-dom";
-import bg2 from "../img/s2.jpg";
-import bg3 from "../img/s3.jpg";
-//import BackgroundSlider from "react-background-slider";
-import { useEffect } from "react";
+import Slajder from "../components/Slajder";
+import Refresh from "../context/Refresh";
+import { LinkContainer } from "react-router-bootstrap";
 
 const Homepage = () => {
-  const loginContext = useContext(LoginContext);
-
   let navigate = useNavigate();
+  const loginContext = useContext(LoginContext);
 
   useEffect(() => {
     if (loginContext.role === "Worker") {
@@ -25,14 +22,26 @@ const Homepage = () => {
 
   Refresh();
   return (
-    <section className="homepage-bg">
-      <div className="homepage-bg-x container text-center d-flex flex-column text-gray">
-        <h2>FoodApp</h2>
-        <p>coś tam coś tam</p>
+    <section className="pos-relative">
+      <div className="pos-absolute">
+        <div className="homepage">
+          <h1>FoodApp</h1>
+          <div className="d-flex">
+            <LinkContainer to="/restaurants">
+              <button className="btn btn-success marginBetweenButtons">
+                Restauracje
+              </button>
+            </LinkContainer>
+            <LinkContainer to="/register">
+              <button className="btn btn-danger">Załóż konto!</button>
+            </LinkContainer>
+          </div>
+        </div>
       </div>
-      <div>
-       
-      </div>
+
+      <section className="vh-100">
+        <Slajder />
+      </section>
     </section>
   );
 };

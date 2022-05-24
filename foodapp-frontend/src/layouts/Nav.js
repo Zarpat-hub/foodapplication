@@ -20,7 +20,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" className="footerXD" variant="dark">
+    <Navbar collapseOnSelect expand="lg" className="gradient" variant="dark">
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>FoodApp</Navbar.Brand>
@@ -40,23 +40,26 @@ const Navigation = () => {
                   ""
                 )}
                 {loginContext.role === "User" || loginContext.role === "" ? (
-                  <LinkContainer to="/restaurants">
-                    <Nav.Link>Restauracje</Nav.Link>
-                  </LinkContainer>
+                  <>
+                    <LinkContainer to="/restaurants">
+                      <Nav.Link>Restauracje</Nav.Link>
+                    </LinkContainer>
+                  </>
                 ) : (
                   ""
-                )}
-                {loginContext.role !== "" ? (
-                  <LinkContainer to="/profile">
-                    <Nav.Link>Profil</Nav.Link>
-                  </LinkContainer>
-                ) : (
-                  " "
                 )}
               </>
             ) : (
               ""
             )}
+            {loginContext.role === "User" ? (
+              <LinkContainer to="/profile">
+                <Nav.Link>Profil</Nav.Link>
+              </LinkContainer>
+            ) : (
+              ""
+            )}
+
             {loginContext.role !== "" ? (
               <Nav.Link onClick={logout}>Wyloguj</Nav.Link>
             ) : (
