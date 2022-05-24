@@ -14,6 +14,8 @@ namespace FoodApp_Backend.Models
         [Required]
         public string PasswordHash { get; set; }
 
+        public double AccountBalance { get; set; } = 0;
+
         [NotMapped]
         public Role Role { get; set; }
 

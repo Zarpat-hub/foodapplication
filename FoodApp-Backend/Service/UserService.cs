@@ -10,6 +10,7 @@ namespace FoodApp_Backend.Service
         IEnumerable<Claim> GetUserClaimsByJWT(string jwt);
         User GetCurrentUser(string jwt);
         void DeleteAccount(int userID);
+        void AddBalance(int balance,int userID);
     }
 
     public class UserService : IUserService
@@ -38,6 +39,13 @@ namespace FoodApp_Backend.Service
                 }
             }
 
+            _context.SaveChanges();
+        }
+
+        public void AddBalance(int balance,int userID)
+        {
+            var user = _context.Users.FirstOrDefault( u => u.Id == userID);
+            user.AccountBalance += balance;
             _context.SaveChanges();
         }
 

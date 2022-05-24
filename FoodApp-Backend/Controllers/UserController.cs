@@ -1,5 +1,6 @@
 ﻿using FoodApp_Backend.Models;
 using FoodApp_Backend.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -18,6 +19,7 @@ namespace FoodApp_Backend.Controllers
         }
 
         [HttpDelete]
+        [Authorize("User")]
         public ActionResult DeleteAccount(int userID)
         {
             _userService.DeleteAccount(userID);
@@ -25,7 +27,16 @@ namespace FoodApp_Backend.Controllers
             return Ok();
         }
 
+        [HttpPost("balance")]
+        [Authorize("User")]
+        public ActionResult AddBalance(int balance,int userID)
+        {
+            _userService.AddBalance(balance, userID);
+            return Ok();
+        }
+
         [HttpGet("claims")]
+        [Authorize("User")]
         public ActionResult<IEnumerable<Claim>> GetUserClaims()
         {
             var jwt = Request.Cookies["jwt"];
