@@ -27,7 +27,7 @@ namespace FoodApp_Backend.Controllers
             _orderService.MakeOrder(orderDTOs, jwt);
             return Ok();
         }
-        [HttpPost]
+        [HttpPost("delivered")]
         [Authorize(Roles = "User")]
         public ActionResult MarkAsDelivered(int orderID)
         {

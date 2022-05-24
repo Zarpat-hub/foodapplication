@@ -16,7 +16,6 @@ namespace FoodApp_Backend.Service
         IEnumerable<Order> GetActiveUserOrders(int userID);
         IEnumerable<Order> GetFinishedUserOrders(int userID);
     }
-
     public class OrderService : IOrderService
     {
         private readonly ApplicationDbContext _context;
