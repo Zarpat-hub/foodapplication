@@ -8,6 +8,7 @@ namespace FoodApp_Backend.Service
     public interface IRestaurantService
     {
         void AddRestaurant(RestaurantDTO restaurantDTO,string jwt);
+        void DeleteRestaurant(int restaurantID);
         IEnumerable<Restaurant> GetRestaurants();
         Restaurant GetRestaurantById(int id);
         IEnumerable<Restaurant> GetRestaurantsByCityName(String cityName);
@@ -109,6 +110,24 @@ namespace FoodApp_Backend.Service
                 _context.Add(restaurantCity);
                 _context.SaveChanges();
             }
+        }
+
+        public void DeleteRestaurant(int restaurantID)
+        {
+            var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == restaurantID);
+            restaurant.Menu = GetDishesForRestaurant(restaurantID);
+            restaurant.Cities = GetCitiesForRestaurant(restaurantID);
+
+            _context.Restaurants.Remove(restaurant);
+            foreach(var item in restaurant.Menu)
+            {
+                _context.Dishes.Remove(item);
+                _context.DishesToRestaurants.Where(x => x.DishId == item.Id).ToList().ForEach(c => _context.DishesToRestaurants.Remove(c));
+            }
+
+            _context.CityToRestaurant.Where(x => x.RestaurantID == restaurantID).ToList().ForEach(c => _context.CityToRestaurant.Remove(c));
+
+            _context.SaveChanges();
         }
 
         public void RateRestaurant(int restaurantID,double rate)

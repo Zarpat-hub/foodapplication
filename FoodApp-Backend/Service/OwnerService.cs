@@ -2,6 +2,7 @@
 using FoodApp_Backend.Models;
 using FoodApp_Backend.Models.DTOs;
 using FoodApp_Backend.Models.RelationEntities;
+using FoodApp_Backend.Repositories;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FoodApp_Backend.Service
@@ -16,12 +17,12 @@ namespace FoodApp_Backend.Service
     public class OwnerService : IOwnerService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAccountService _accountService;
+        private readonly IDishRepository _dishRepository;
 
-        public OwnerService(ApplicationDbContext context, IAccountService accountService)
+        public OwnerService(ApplicationDbContext context, IDishRepository dishRepository)
         {
             _context = context;
-            _accountService = accountService;
+            _dishRepository = dishRepository;
         }
 
         public IEnumerable<Restaurant> GetOwnedRestaurants(int ownerID)
@@ -58,6 +59,5 @@ namespace FoodApp_Backend.Service
 
             _context.SaveChanges();
         }
-
     }
 }
