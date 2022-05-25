@@ -36,7 +36,6 @@ namespace FoodApp_Backend.Controllers
         }
 
         [HttpGet("claims")]
-        [Authorize("User")]
         public ActionResult<IEnumerable<Claim>> GetUserClaims()
         {
             var jwt = Request.Cookies["jwt"];
