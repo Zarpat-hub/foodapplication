@@ -73,8 +73,6 @@ const Restaurant = () => {
   const Bearer = `Bearer ${token}`;
 
   const revievFunction = (e) => {
-    //console.log(e);
-    //console.log(name);
     fetch(`http://localhost:8080/Restaurant/rating/${name}`, {
       method: "POST",
       headers: {
@@ -103,8 +101,16 @@ const Restaurant = () => {
               <h2 className="pt-3 pb-2">Restauracja {info.name}</h2>
             </div>
             <div>
+              {user.role === "User" ? (
+                <ReactStars
+                  onChange={revievFunction}
+                  size={24}
+                  color2={"#ff9414"}
+                />
+              ) : (
+                ""
+              )}
               Ocena {averageRating.toFixed(2)} ({revievsNumber})
-              <ReactStars onChange={revievFunction} size={24} />
             </div>
           </div>
           <div className="row pt-2">

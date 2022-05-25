@@ -10,6 +10,8 @@ const Register = () => {
 
   let navigate = useNavigate();
 
+  const [error, setError] = useState(false);
+
   const submit = async (e) => {
     e.preventDefault();
     await fetch("http://localhost:8080/Auth/owner", {
@@ -27,7 +29,11 @@ const Register = () => {
     })
       .then((res) => {
         console.log(res);
-        navigate("/login");
+        if (res.status === 200) {
+          navigate("/login");
+        } else {
+          setError(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -36,7 +42,7 @@ const Register = () => {
 
   return (
     <section>
-      <section className="vh-100">
+      <section className="mt-5">
         <div className="mask d-flex align-items-center h-100 gradient-custom-3">
           <div className="container h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
@@ -111,7 +117,9 @@ const Register = () => {
                           required
                         />
                       </div>
-
+                      <div className="text-center mt-2">
+                        {error ? "Rejestracja się nie powiodła" : ""}
+                      </div>
                       <p className="text-center text-muted mt-5 mb-0">
                         <LinkContainer to="/login">
                           <Nav.Link>Masz już konto? Zaloguj się!</Nav.Link>

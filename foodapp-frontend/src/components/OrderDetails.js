@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 const OrderDetails = ({
   id,
+  name,
   city,
   street,
   houseNumber,
@@ -37,21 +38,28 @@ const OrderDetails = ({
   };
 
   return (
-    <section className="row card p-3 mt-2">
+    <section className="row p-3 mt-2">
       <div className="d-flex flex-column ">
         <div>
+          <h3>{name}</h3>
           <p>Miasto: {city}</p>
           <p>Data: {cData}</p>
-          <p>Godzina: {cHour}</p>
-          <button onClick={handleShow} className="btn-primary align-self-end">
-            Szczegóły
-          </button>
-          <button
-            className="btn-success align-self-end"
-            onClick={() => update(id)}
-          >
-            Dostarczono
-          </button>
+          <p>Godzina zamówienia: {cHour}</p>
+          <div className="d-flex ">
+            <button
+              onClick={handleShow}
+              className="btn-primary marginBetweenButtons"
+            >
+              Szczegóły
+            </button>
+            <button
+              className="btn-success marginBetweenButtons"
+              onClick={() => update(id)}
+            >
+              Dostarczono
+            </button>
+          </div>
+          <hr />
         </div>
       </div>
       <Modal
@@ -65,6 +73,7 @@ const OrderDetails = ({
           <Modal.Title>Szczegóły zamówienia</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <h3>{name}</h3>
           <p>{city}</p>
           <p>
             Adres dostawy: {street} {houseNumber}

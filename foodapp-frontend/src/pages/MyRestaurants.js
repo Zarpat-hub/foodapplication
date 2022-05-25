@@ -2,13 +2,19 @@ import { useEffect, useState, useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const MyRestaurants = () => {
   const user = useContext(LoginContext);
   const token = user.token;
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const [restaurants, setResturant] = useState([]);
-  const Bearer = `Bearer ${token}`;
+  let Bearer = `Bearer ${token}`;
   useEffect(() => {
     fetch(`http://localhost:8080/Owner/owned`, {
       headers: {
@@ -25,6 +31,45 @@ const MyRestaurants = () => {
       .catch((error) => console.log(error));
   }, [Bearer]);
 
+  const deleteAccount = () => {
+    console.log("TEST");
+    console.log("delete");
+    console.log(user.id);
+    Bearer = `Bearer ${token}`;
+    fetch(`http://localhost:8080/User?userID=${user.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: Bearer,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    });
+
+    user.setName("");
+    user.setRole("");
+    user.setToken("");
+    navigate("/");
+  };
+
+  const deleteRestaurant = (id) => {
+    console.log(id);
+
+    fetch(`http://localhost:8080/Restaurant?restaurantID=${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: Bearer,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      credentials: "include",
+    });
+
+    let newRestaurants = [...restaurants];
+    newRestaurants = newRestaurants.filter((t) => t.id !== id);
+    setResturant(newRestaurants);
+  };
+
   return (
     <section className="container mt-3">
       <div className="d-flex justify-content-between">
@@ -36,7 +81,9 @@ const MyRestaurants = () => {
             </Nav.Link>
           </LinkContainer>
           <Nav.Link>
-            <button className="btn btn-danger">Usuń konto</button>
+            <button className="btn btn-danger" onClick={handleShow}>
+              Usuń konto
+            </button>
           </Nav.Link>
         </div>
       </div>
@@ -55,13 +102,38 @@ const MyRestaurants = () => {
                   </Nav.Link>
                 </LinkContainer>
                 <Nav.Link>
-                  <button className="btn btn-danger">X</button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => deleteRestaurant(restaurant.id)}
+                  >
+                    X
+                  </button>
                 </Nav.Link>
               </div>
             </div>
           </div>
         </div>
       ))}
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Usuwanie konta</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Czy napewno chcesz usunąć konto?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={deleteAccount}>
+            Usuń
+          </button>
+        </Modal.Footer>
+      </Modal>
     </section>
   );
 };

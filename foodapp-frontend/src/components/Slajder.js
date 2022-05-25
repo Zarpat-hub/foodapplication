@@ -9,10 +9,13 @@ const Slajder = () => {
           <div className="bg1 vh-100"></div>
         </Carousel.Item>
         <Carousel.Item>
-          <div className="bg2 vh-100"></div>
+          <div className="bg3 vh-100"></div>
         </Carousel.Item>
         <Carousel.Item>
-          <div className="bg3 vh-100"></div>
+          <div className="bg4 vh-100"></div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div className="bg5 vh-100"></div>
         </Carousel.Item>
       </Carousel>
     </>

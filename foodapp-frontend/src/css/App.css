@@ -57,15 +57,23 @@ body {
   z-index: 1;
   position: relative;
 }
-.bg2 {
-  background: url("../img/s2.jpg");
+
+.bg3 {
+  background: url("../img/s3.jpg");
   background-size: cover;
   background-position: center;
   z-index: 1;
   position: relative;
 }
-.bg3 {
-  background: url("../img/s3.jpg");
+.bg4 {
+  background: url("../img/s4.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  position: relative;
+}
+.bg5 {
+  background: url("../img/s5.jpg");
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -80,7 +88,7 @@ body {
 .pos-absolute {
   position: absolute;
   z-index: 2;
-  left: 40%;
+  left: 35%;
   top: 40%;
   color: #444;
 }
@@ -88,9 +96,18 @@ body {
 .homepage {
   color: whitesmoke;
 }
-.marginBetweenButtons {
-  margin: 0 10px 0 0;
+.colorh1 {
+  background: linear-gradient(
+    90deg,
+    rgba(237, 41, 41, 1) 0%,
+    rgba(255, 148, 20, 1) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
 }
-.test{
-	color:red
+
+.marginBetweenButtons {
+  margin: 10px 10px 0 0;
 }

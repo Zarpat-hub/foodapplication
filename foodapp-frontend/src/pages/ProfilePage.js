@@ -4,6 +4,7 @@ import { Modal, NavLink } from "react-bootstrap";
 import { useEffect } from "react";
 import Loader from "../components/Loader";
 import OrderDetails from "../components/OrderDetails";
+import FinishedOrderDetails from "../components/FinishedOrderDetails";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -60,6 +61,7 @@ const ProfilePage = () => {
             <OrderDetails
               key={data.id}
               id={data.id}
+              name={data.restaurantName}
               city={data.cityName}
               street={data.street}
               houseNumber={data.houseNumber}
@@ -73,11 +75,11 @@ const ProfilePage = () => {
       if (finishedOrders.length !== 0) {
         if (finishedOrders.status !== 400) {
           console.log(finishedOrders);
-          //setMonut(true);
+
           finishedOrdersRef.current = finishedOrders.map((data) => (
-            <OrderDetails
+            <FinishedOrderDetails
               key={data.id}
-              id={data.id}
+              name={data.restaurantName}
               city={data.cityName}
               street={data.street}
               houseNumber={data.houseNumber}
@@ -127,14 +129,14 @@ const ProfilePage = () => {
         </NavLink>
       </div>
       {user.role === "User" ? (
-        <div className="d-flex flex-column flex-md-row justify-content-md-between mt-2 mb-5">
+        <div className="d-flex flex-column flex-md-row mt-2 mb-5">
           <div className="col-12 col-md-6">
             <h4>Aktualne zamówienia</h4>
             <div className="scroll-y">
               {mount ? ordersActiveRef.current : <Loader />}
             </div>
           </div>
-          <div className="col-12 col-md-6 xy  ">
+          <div className="col-12 col-md-6 xy ">
             <h4>Historia zamówień</h4>
             <div className="scroll-y">
               {mount ? finishedOrdersRef.current : <Loader />}

@@ -15,7 +15,7 @@ const Homepage = () => {
       navigate("/workpage");
     }
     if (loginContext.role === "Owner") {
-      console.log("KONTO PRACOWNIKA");
+      console.log("KONTO WŁAŚCICIELA");
       navigate("/myrestaurants");
     }
   });
@@ -25,15 +25,17 @@ const Homepage = () => {
     <section className="pos-relative">
       <div className="pos-absolute">
         <div className="homepage">
-          <h1>FoodApp</h1>
-          <div className="d-flex">
+          <h1 className="colorh1">FoodApp</h1>
+          <div className="d-flex flex-column flex-sm-row">
             <LinkContainer to="/restaurants">
               <button className="btn btn-success marginBetweenButtons">
                 Restauracje
               </button>
             </LinkContainer>
             <LinkContainer to="/register">
-              <button className="btn btn-danger">Załóż konto!</button>
+              <button className="btn btn-danger marginBetweenButtons">
+                Załóż konto!
+              </button>
             </LinkContainer>
           </div>
         </div>
