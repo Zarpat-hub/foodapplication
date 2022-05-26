@@ -83,7 +83,8 @@ namespace FoodApp_Backend.Service
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.Name}"),
                 new Claim(ClaimTypes.Email, $"{user.Email}"),
-                new Claim(ClaimTypes.Role, $"{user.Role.Name}")
+                new Claim(ClaimTypes.Role, $"{user.Role.Name}"),
+                new Claim(ClaimTypes.Hash, $"{user.AccountBalance}")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")));
