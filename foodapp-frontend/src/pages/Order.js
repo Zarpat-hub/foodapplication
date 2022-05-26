@@ -53,7 +53,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
       })
         .then((res) => {
           console.log(res);
-          navigate("/profile");
+          navigate("/");
         })
         .catch((res) => {
           console.log(res);

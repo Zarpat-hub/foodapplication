@@ -10,14 +10,20 @@ import { useNavigate } from "react-router-dom";
 const ProfilePage = () => {
   const user = useContext(LoginContext);
 
-  const [show, setShow] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [showAddBalance, setShowAddBalance] = useState(false);
   const [activeOrders, setActiveOrders] = useState([]);
   const [finishedOrders, setFinishedOrders] = useState([]);
   const [mount, setMonut] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
+  const handleShowAddBalance = () => setShowAddBalance(true);
+  const handleShowDeleteBalance = () => setShowAddBalance(false);
 
   const navigate = useNavigate();
+
+  const [blik, setBlik] = useState("");
+  const [balance, setBalance] = useState("");
 
   const ordersActiveRef = useRef();
   const finishedOrdersRef = useRef();
@@ -29,11 +35,11 @@ const ProfilePage = () => {
           `http://localhost:8080/Order/user/active?userID=${user.id}`
         );
         const data = await res.json();
+
         if (data.length === 0) {
           console.log("Brak zamówień");
           setMonut(true);
         } else {
-          //console.log(data);
           setActiveOrders(data);
         }
       };
@@ -114,6 +120,29 @@ const ProfilePage = () => {
     navigate("/");
   };
 
+  const addBalance = () => {
+    const x = parseInt(balance);
+
+    setBalance(parseInt(x).toFixed(2));
+
+    if (blik === "1234") {
+      fetch(`http://localhost:8080/User/${user.id}/balance`, {
+        method: "POST",
+        headers: {
+          Authorization: Bearer,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        credentials: "include",
+        body: x,
+      })
+        .then(() => {
+          window.location.reload(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <section className="container mt-3">
       <div className="d-flex justify-content-between">
@@ -121,12 +150,20 @@ const ProfilePage = () => {
           <h2>Dzień dobry {user.name}!</h2>
           <p>Adres e-mail: {user.email}</p>
           <p>Uprawnienia: {user.role}</p>
+          <p>Dostępne środki: {user.balance}</p>
         </div>
-        <NavLink>
-          <button className="btn btn-danger" onClick={handleShow}>
-            Usuń konto
-          </button>
-        </NavLink>
+        <div className="d-flex">
+          <NavLink>
+            <button className="btn btn-primary" onClick={handleShowAddBalance}>
+              Dodaj środki
+            </button>
+          </NavLink>
+          <NavLink>
+            <button className="btn btn-danger" onClick={handleShowDelete}>
+              Usuń konto
+            </button>
+          </NavLink>
+        </div>
       </div>
       {user.role === "User" ? (
         <div className="d-flex flex-column flex-md-row mt-2 mb-5">
@@ -148,8 +185,8 @@ const ProfilePage = () => {
       )}
 
       <Modal
-        show={show}
-        onHide={handleClose}
+        show={showDelete}
+        onHide={handleCloseDelete}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -163,6 +200,36 @@ const ProfilePage = () => {
         <Modal.Footer>
           <button className="btn btn-danger" onClick={deleteAccount}>
             Usuń
+          </button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showAddBalance}
+        onHide={handleShowDeleteBalance}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Dodanie środków</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Podaj kwotę</p>
+          <input
+            type="number"
+            value={balance}
+            onChange={(e) => setBalance(e.target.value)}
+          />
+          <p>Podaj Kod Bilk</p>
+          <input
+            type="number"
+            value={blik}
+            onChange={(e) => setBlik(e.target.value)}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-primary" onClick={addBalance}>
+            Dodaj
           </button>
         </Modal.Footer>
       </Modal>

@@ -27,6 +27,7 @@ const App = () => {
   const [role, setRole] = useState(User.role);
   const [email, setEmail] = useState(User.email);
   const [id, setID] = useState(User.id);
+  const [balance, setBalance] = useState(User.balance);
   const [token, setToken] = useState(User.token);
   const CheckLogin = async () => {
     const res = await fetch("http://localhost:8080/User/claims", {
@@ -35,11 +36,15 @@ const App = () => {
     });
 
     const x = await res.json();
+
+    //console.log(x);
+
     setID(x[0].value);
     setName(x[1].value);
     setEmail(x[2].value);
     setRole(x[3].value);
-    setToken(x[4].value);
+    setBalance(x[4].value);
+    setToken(x[5].value);
 
     if (role === "Owner") {
       console.log("App.js owner account");
@@ -60,12 +65,14 @@ const App = () => {
           role,
           email,
           id,
+          balance,
           token,
           setToken,
           setID,
           setEmail,
           setName,
           setRole,
+          setBalance,
         }}
       >
         <Nav />

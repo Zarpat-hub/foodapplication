@@ -5,6 +5,7 @@ export const User = {
   name: "",
   role: "",
   email: "",
+  balance: "",
   token: "",
 };
 
