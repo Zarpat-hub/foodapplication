@@ -65,7 +65,7 @@ namespace FoodApp_Backend.Service
                 _context.SaveChanges();
 
                 var dish = _context.Dishes.FirstOrDefault(d => d.Id == dto.DishID);
-                totalCost += dish.Price;
+                totalCost += dto.Quantity * dish.Price;
             }
 
             if (user.AccountBalance < totalCost)
