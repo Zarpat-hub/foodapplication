@@ -10,7 +10,7 @@ namespace FoodApp_Backend.Service
 {
     public interface IOrderService
     {
-        void MakeOrder(OrderDTO[] orderDTO,string jwt);
+        void MakeOrder(OrderDTO[] orderDTO,int userID);
         void MarkAsDelivered(int orderID);
         IEnumerable<Order> GetAllUserOrders(int userID);
         IEnumerable<Order> GetActiveUserOrders(int userID);
@@ -29,23 +29,23 @@ namespace FoodApp_Backend.Service
             _dishRepository = dishRepository;
         }
 
-        public void MakeOrder([FromBody]OrderDTO[] orderDTO,string jwt)
+        public void MakeOrder([FromBody]OrderDTO[] orderDTO,int userID)
         {
             var restaurantID = orderDTO[0].RestaurantID;
 
             Order order = new Order();
             order.RestaurantID = restaurantID;
 
-            var userId = _userService.GetUserClaimsByJWT(jwt).FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            order.UserID = Convert.ToInt32(userId);
-            var user = _context.Users.FirstOrDefault(u => u.Id == Convert.ToInt32(userId));
+            //var userId = _userService.GetUserClaimsByJWT(jwt).FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            order.UserID = userID;
+            var user = _context.Users.FirstOrDefault(u => u.Id == userID);
 
             var restaurant = _context.Restaurants.FirstOrDefault(r => r.Id == restaurantID);
             var owner = _context.Users.FirstOrDefault(u => u.Id == restaurant.OwnerId);
 
             double totalCost = 0;
 
-            Console.WriteLine(userId);
+            Console.WriteLine(userID);
 
             order.CityID = orderDTO[0].CityID;
             order.Street = orderDTO[0].Street;

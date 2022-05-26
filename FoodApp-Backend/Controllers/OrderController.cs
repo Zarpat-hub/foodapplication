@@ -20,11 +20,11 @@ namespace FoodApp_Backend.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles ="User")]
-        public ActionResult MakeOrder(OrderDTO[] orderDTOs)
+        //[Authorize(Roles ="User")]
+        public ActionResult MakeOrder(OrderDTO[] orderDTOs,int userID)
         {
-            var jwt = Request.Cookies["jwt"];
-            _orderService.MakeOrder(orderDTOs, jwt);
+            //var jwt = Request.Cookies["jwt"];
+            _orderService.MakeOrder(orderDTOs, userID);
             return Ok();
         }
         [HttpPost("delivered")]
