@@ -37,7 +37,7 @@ const App = () => {
 
     const x = await res.json();
 
-    //console.log(x);
+    //xxconsole.log(x[5].valuex);
 
     setID(x[0].value);
     setName(x[1].value);

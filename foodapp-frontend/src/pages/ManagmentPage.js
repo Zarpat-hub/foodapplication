@@ -11,7 +11,6 @@ const ManagmentPage = () => {
   const user = useContext(LoginContext);
   const token = user.token;
 
-  const [info, setInfo] = useState([]);
   const [menu, setMenu] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
@@ -48,7 +47,6 @@ const ManagmentPage = () => {
       .then((d) => {
         setMenu(d.menu);
         setCities(d.cities);
-        setInfo(d);
         setWorkers(d.hasEmployeeAccount);
         setLoaded(true);
       })
@@ -141,7 +139,8 @@ const ManagmentPage = () => {
   const menuList = menu.map((dish) => (
     <div key={dish.id} className="card mt-2">
       <div className="d-flex p-4 justify-content-between">
-        <h4>{dish.name}</h4>
+        <h4>{dish.name} </h4>
+
         <button className="btn btn-danger" onClick={() => deleteDish(dish.id)}>
           X
         </button>

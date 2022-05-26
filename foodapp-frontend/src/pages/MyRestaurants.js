@@ -32,9 +32,6 @@ const MyRestaurants = () => {
   }, [Bearer]);
 
   const deleteAccount = () => {
-    console.log("TEST");
-    console.log("delete");
-    console.log(user.id);
     Bearer = `Bearer ${token}`;
     fetch(`http://localhost:8080/User?userID=${user.id}`, {
       method: "DELETE",

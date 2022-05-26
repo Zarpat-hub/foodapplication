@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const [activeOrders, setActiveOrders] = useState([]);
   const [finishedOrders, setFinishedOrders] = useState([]);
   const [mount, setMonut] = useState(false);
+  const [mount2, setMonut2] = useState(false);
   const handleCloseDelete = () => setShowDelete(false);
   const handleShowDelete = () => setShowDelete(true);
   const handleShowAddBalance = () => setShowAddBalance(true);
@@ -34,31 +35,18 @@ const ProfilePage = () => {
         const res = await fetch(
           `http://localhost:8080/Order/user/active?userID=${user.id}`
         );
-        const data = await res.json();
 
+        const data = await res.json();
+        //console.log(data);
         if (data.length === 0) {
-          console.log("Brak zamówień");
+          //console.log("Brak zamówień");
           setMonut(true);
         } else {
           setActiveOrders(data);
         }
       };
-      const load2 = async () => {
-        const res = await fetch(
-          `http://localhost:8080/Order/user/finished?userID=${user.id}`
-        );
-        const data = await res.json();
-        if (data.length === 0) {
-          console.log("Brak historii zamówień");
-          setMonut(true);
-        } else {
-          //console.log(data);
-          setFinishedOrders(data);
-        }
-      };
-
       load();
-      load2();
+
       if (activeOrders.length !== 0) {
         if (activeOrders.status !== 400) {
           console.log(activeOrders);
@@ -77,14 +65,32 @@ const ProfilePage = () => {
           ));
         }
       }
-      /////
+    }
+    if (!mount2) {
+      const load = async () => {
+        const res = await fetch(
+          `http://localhost:8080/Order/user/finished?userID=${user.id}`
+        );
+
+        const data = await res.json();
+        // console.log(data);
+        if (data.length === 0) {
+          console.log("Brak zamówień");
+          setMonut2(true);
+        } else {
+          setFinishedOrders(data);
+        }
+      };
+      load();
+
       if (finishedOrders.length !== 0) {
         if (finishedOrders.status !== 400) {
           console.log(finishedOrders);
-
+          setMonut2(true);
           finishedOrdersRef.current = finishedOrders.map((data) => (
             <FinishedOrderDetails
               key={data.id}
+              id={data.id}
               name={data.restaurantName}
               city={data.cityName}
               street={data.street}
@@ -96,7 +102,7 @@ const ProfilePage = () => {
         }
       }
     }
-  }, [activeOrders, finishedOrders, mount, user.id]);
+  }, [activeOrders, finishedOrders, mount2, mount, user.id]);
 
   const token = user.token;
   const Bearer = `Bearer ${token}`;
@@ -115,8 +121,15 @@ const ProfilePage = () => {
       credentials: "include",
     });
 
+    fetch("http://localhost:8080/Auth/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
     user.setName("");
     user.setRole("");
+    user.setToken("");
     navigate("/");
   };
 

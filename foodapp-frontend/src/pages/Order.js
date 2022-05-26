@@ -41,7 +41,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
       });
 
       const Bearer = `Bearer ${token}`;
-      fetch("http://localhost:8080/Order", {
+      fetch(`http://localhost:8080/Order?userID=${loginContext.id}`, {
         method: "POST",
         headers: {
           Authorization: Bearer,
