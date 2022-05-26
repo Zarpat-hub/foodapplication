@@ -27,11 +27,11 @@ namespace FoodApp_Backend.Controllers
             return Ok();
         }
 
-        [HttpPost("balance")]
-        [Authorize("User")]
-        public ActionResult AddBalance(int balance,int userID)
+        [HttpPost("{id}/balance")]
+        //[Authorize("User")]
+        public ActionResult AddBalance(int id, [FromBody]int balance)
         {
-            _userService.AddBalance(balance, userID);
+            _userService.AddBalance(balance, id);
             return Ok();
         }
 
