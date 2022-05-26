@@ -54,11 +54,15 @@ namespace FoodApp_Backend.Service
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwt);
 
+            var userID = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.FirstOrDefault(u => u.Id == Convert.ToInt32(userID));
+
             var claims = token.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier || c.Type == ClaimTypes.Name
                                             || c.Type == ClaimTypes.Email || c.Type == ClaimTypes.Role 
-                                            || c.Type == ClaimTypes.Sid
-                                            || c.Type == ClaimTypes.Hash).ToList();
+                                            || c.Type == ClaimTypes.Sid).ToList();
+            claims.Add(new Claim("Balance", user.AccountBalance.ToString()));
             claims.Add(new Claim(ClaimTypes.UserData, jwt));
+            
 
             return claims;
         }
