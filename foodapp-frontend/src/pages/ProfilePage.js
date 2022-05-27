@@ -119,18 +119,18 @@ const ProfilePage = () => {
         "Access-Control-Allow-Origin": "*",
       },
       credentials: "include",
+    }).then(() => {
+      fetch("http://localhost:8080/Auth/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }).then(() => {
+        user.setName("");
+        user.setRole("");
+        user.setToken("");
+        navigate("/");
+      });
     });
-
-    fetch("http://localhost:8080/Auth/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-
-    user.setName("");
-    user.setRole("");
-    user.setToken("");
-    navigate("/");
   };
 
   const addBalance = () => {

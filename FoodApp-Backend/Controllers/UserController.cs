@@ -19,7 +19,7 @@ namespace FoodApp_Backend.Controllers
         }
 
         [HttpDelete]
-        [Authorize("User")]
+        //[Authorize("User")]
         public ActionResult DeleteAccount(int userID)
         {
             _userService.DeleteAccount(userID);
