@@ -26,6 +26,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
 
   const submit = (e) => {
     e.preventDefault();
+
     if (cart.length !== 0) {
       const order = [];
 
@@ -53,6 +54,7 @@ const Order = ({ restaurantID, cart, cities, handleClose, show }) => {
       })
         .then((res) => {
           console.log(res);
+          //console.log(order);
           navigate("/");
         })
         .catch((res) => {

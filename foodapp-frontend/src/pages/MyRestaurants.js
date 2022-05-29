@@ -70,7 +70,10 @@ const MyRestaurants = () => {
   return (
     <section className="container mt-3">
       <div className="d-flex justify-content-between">
-        <h2>Twoje restauracje</h2>
+        <div>
+          <h2>Twoje restauracje</h2>
+          <p>Zarobione środki: {Number(user.balance).toFixed(2)}PLN</p>
+        </div>
         <div className="d-flex">
           <LinkContainer to="/addRestaurant">
             <Nav.Link>

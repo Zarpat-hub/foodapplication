@@ -15,7 +15,10 @@ const OrderDetails = ({
   const handleShow = () => setShow(true);
 
   const cData = createdData.slice(0, 10);
-  const cHour = createdData.slice(11, 16);
+  const cHour = createdData.slice(11, 13);
+  const cMinutes = createdData.slice(14, 16);
+  console.log(cHour);
+  console.log(cMinutes);
 
   const user = useContext(LoginContext);
   const token = user.token;
@@ -44,7 +47,9 @@ const OrderDetails = ({
           <h3>{name}</h3>
           <p>Miasto: {city}</p>
           <p>Data: {cData}</p>
-          <p>Godzina zamówienia: {cHour}</p>
+          <p>
+            Godzina zamówienia: {Number(cHour) + 2}:{cMinutes}
+          </p>
           <div className="d-flex ">
             <button
               onClick={handleShow}

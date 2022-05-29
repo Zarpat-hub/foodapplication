@@ -32,11 +32,15 @@ const Homepage = () => {
                 Restauracje
               </button>
             </LinkContainer>
-            <LinkContainer to="/register">
-              <button className="btn btn-danger marginBetweenButtons">
-                Załóż konto!
-              </button>
-            </LinkContainer>
+            {loginContext.role === "" ? (
+              <LinkContainer to="/register">
+                <button className="btn btn-danger marginBetweenButtons">
+                  Załóż konto!
+                </button>
+              </LinkContainer>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

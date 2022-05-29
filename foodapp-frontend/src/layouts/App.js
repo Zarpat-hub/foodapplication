@@ -55,7 +55,11 @@ const App = () => {
     }
   };
 
-  CheckLogin();
+  try {
+    CheckLogin();
+  } catch (e) {
+    console.log(e);
+  }
 
   return (
     <Router>

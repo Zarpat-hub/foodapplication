@@ -37,9 +37,7 @@ const ProfilePage = () => {
         );
 
         const data = await res.json();
-        //console.log(data);
         if (data.length === 0) {
-          //console.log("Brak zamówień");
           setMonut(true);
         } else {
           setActiveOrders(data);
@@ -162,8 +160,7 @@ const ProfilePage = () => {
         <div className="d-flex flex-column">
           <h2>Dzień dobry {user.name}!</h2>
           <p>Adres e-mail: {user.email}</p>
-          <p>Uprawnienia: {user.role}</p>
-          <p>Dostępne środki: {user.balance}</p>
+          <p>Dostępne środki: {Number(user.balance).toFixed(2)} PLN</p>
         </div>
         <div className="d-flex">
           <NavLink>
@@ -231,11 +228,15 @@ const ProfilePage = () => {
           <input
             type="number"
             value={balance}
+            className="form-control form-control-lg"
             onChange={(e) => setBalance(e.target.value)}
           />
           <p>Podaj Kod Bilk</p>
           <input
-            type="number"
+            type="text"
+            pattern="\d*"
+            maxLength="4"
+            className="form-control form-control-lg"
             value={blik}
             onChange={(e) => setBlik(e.target.value)}
           />
