@@ -54,6 +54,7 @@ const ProfilePage = () => {
               key={data.id}
               id={data.id}
               name={data.restaurantName}
+              status={data.status}
               city={data.cityName}
               street={data.street}
               houseNumber={data.houseNumber}
@@ -136,7 +137,7 @@ const ProfilePage = () => {
 
     setBalance(parseInt(x).toFixed(2));
 
-    if (blik === "1234") {
+    if (blik === "123456") {
       fetch(`http://localhost:8080/User/${user.id}/balance`, {
         method: "POST",
         headers: {

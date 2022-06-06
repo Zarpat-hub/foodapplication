@@ -5,6 +5,7 @@ const OrderDetails = ({
   id,
   name,
   city,
+  status,
   street,
   houseNumber,
   dishes,
@@ -83,6 +84,7 @@ const OrderDetails = ({
           <p>
             Adres dostawy: {street} {houseNumber}
           </p>
+          <p>Status: {status===1 ? "WYSŁANE ": "OCZEKUJĄCE NA WYSŁANIE"}</p>
           <h4>Zamówienie</h4>
           {dishes.map((dish) => (
             <div key={dish.item1.id + 1000}>
